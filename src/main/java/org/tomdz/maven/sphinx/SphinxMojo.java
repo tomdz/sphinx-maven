@@ -67,6 +67,13 @@ public class SphinxMojo extends AbstractMavenReport
      */
     private boolean verbose;
 
+    /**
+     * Whether Sphinx should treat warnings as errors.
+     *
+     * @parameter alias="warningsAsErrors" default-value="false"
+     */
+    private boolean warningsAsErrors;
+
     @Override
     public String getDescription(Locale defaultLocale)
     {
@@ -168,6 +175,13 @@ public class SphinxMojo extends AbstractMavenReport
         if (verbose) {
             args.add("-v");
         }
+        else {
+            args.add("-q");
+        }
+        if (warningsAsErrors) {
+            args.add("-W");
+        }
+        args.add("-n");
         args.add("-b");
         args.add("html");
         args.add(sourceDirectory.getAbsolutePath());
