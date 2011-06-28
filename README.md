@@ -6,7 +6,7 @@ documentation out of [reStructured Text](http://docutils.sf.net/rst.html) source
 
 ## Basic Usage <a name="basic-usage"></a>
 
-1.  Create a folder `src\site\sphinx` (this can be changed via options should you want a different folder).
+1.  Create a folder `src/site/sphinx` (this can be changed via options should you want a different folder).
 2.  Generate documentation in it. Basically what you need is
 
     * A configuration file called [conf.py](http://sphinx.pocoo.org/config.html) that defines the theme and other options (such as which output formats etc.)
