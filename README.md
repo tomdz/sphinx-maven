@@ -41,6 +41,54 @@ documentation out of [reStructured Text](http://docutils.sf.net/rst.html) source
 
     It is important that you set the `reportSet` attribute of the `project-info-reports` plugin to an empty set of `reports`. If not
     then the default `about` report will be generated which conflicts with the `sphinx-maven` plugin.
+
+    Maven 3 changes how reporting plugins are specified. A `profile` can be used to generate a `pom.xml` that can be used with both Maven 2
+    and Maven 3:
+
+                <profiles>
+                  <profile>
+                    <id>maven-3</id>
+                    <activation>
+                      <file>
+                         <!--  This employs that the basedir expression is only recognized by Maven 3.x (see MNG-2363) -->
+                        <exists>${basedir}</exists>
+                      </file>
+                    </activation>
+                    <build>
+                      <plugins>
+                        <plugin>
+                          <groupId>org.apache.maven.plugins</groupId>
+                          <artifactId>maven-site-plugin</artifactId>
+                          <version>3.0-beta-3</version>
+                          <configuration>
+                            <reportPlugins>
+                              <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-project-info-reports-plugin</artifactId>
+                                <version>2.2</version>
+                                <reportSets>
+                                  <reportSet>
+                                    <reports></reports>
+                                  </reportSet>
+                                </reportSets>
+                              </plugin>
+                              <plugin>
+                                <groupId>org.tomdz.maven</groupId>
+                                <artifactId>sphinx-maven-plugin</artifactId>
+                                <version>1.0.0-SNAPSHOT</version>
+                              </plugin>
+                            </reportPlugins>
+                          </configuration>
+                        </plugin>
+                      </plugins>        
+                    </build>
+                  </profile>
+                </profiles>
+
+    The profile will only be activated if Maven 3 is used to generate the site. For more details about Maven 3 and the site
+    plugin see https://cwiki.apache.org/MAVEN/maven-3x-and-site-plugin.html and
+    http://whatiscomingtomyhead.wordpress.com/2011/06/05/maven-3-site-plugin-how-to/
+
 4.  Generate the documentation by running
 
         mvn site
