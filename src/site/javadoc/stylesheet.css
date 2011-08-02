@@ -1,0 +1,83 @@
+/* Javadoc style sheet */
+
+/* Define colors, fonts and other style attributes here to override the defaults */
+
+/* Page background color */
+body {
+  font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+  font-size: 15px;
+  background-color: white;
+  color: #000;
+}
+
+/* Headings */
+h1 { margin-top: 0; padding-top: 0; font-size: 200%; }
+h2 { font-size: 180%; }
+h3 { font-size: 150%; }
+h4 { font-size: 130%; }
+h5 { font-size: 100%; }
+h6 { font-size: 100%; }
+
+pre, code {
+  font-family: 'Consolas', 'Menlo', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+  font-size: 0.9em;
+  background: #FAFAFA;
+  color: #222;
+}
+
+pre {
+    padding: 7px 10px;
+    margin: 15px 0;
+    border: 1px solid #C7C7C7;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    line-height: 1.3em;
+}
+
+p, dd {
+  line-height: 1.4em;
+  font-size: 17px;
+}
+
+a {
+  color: #1F626F;
+  text-decoration: none;
+  border-bottom: 1px dashed #DCDCDC;
+}
+
+a:hover {
+  color: #1F4E6F;
+  border-bottom: 1px solid #6D6D6D;
+}
+
+.FrameItemFont a {
+  color: #444;
+  text-decoration: none;
+  border-bottom: 1px dashed #DCDCDC;
+}
+
+.FrameItemFont a:hover {
+  background: #EEE;
+  border-bottom: 1px solid #6D6D6D;
+}
+
+/* Table colors */
+.TableHeadingColor     { background: #CCCCCC; color:#000000 }
+.TableSubHeadingColor  { background: #EEEEEE; color:#000000 }
+.TableRowColor         { background: #FFFFFF; color:#000000 }
+
+/* Font used in left-hand frame lists */
+.FrameTitleFont   { font-size: 100%; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif; color:#000000 }
+.FrameHeadingFont { font-size:  90%; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif; color:#000000 }
+.FrameItemFont    { font-size:  90%; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif; color:#000000 }
+
+/* Navigation bar fonts and colors */
+.NavBarCell1    { background-color:#EEE; color:#000} /* Light mauve */
+.NavBarCell1Rev { background-color:#EEE; color:#AAA; } /* Dark Blue */
+.NavBarFont1    { font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif; }
+.NavBarFont1Rev { font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif; }
+
+.NavBarCell2    { font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif; background-color:#FFFFFF; color:#000000}
+.NavBarCell3    { font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif; background-color:#FFFFFF; color:#000000}
+
