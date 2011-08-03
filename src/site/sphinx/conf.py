@@ -23,7 +23,7 @@ needs_sphinx = '1.0'
 
 extensions = []
 
-templates_path = ['templates']
+templates_path = ['_templates']
 
 source_suffix = '.rst'
 
@@ -49,9 +49,9 @@ master_doc = 'index'
 
 html_theme = 'sphinx-maven'
 
-html_theme_path = ["theme"]
+html_theme_path = ["_theme"]
 
-html_static_path = ['static']
+html_static_path = ['_static']
 
 html_use_smartypants = True
 
