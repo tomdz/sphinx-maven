@@ -1,10 +1,8 @@
-.. _`Maven site plugin`: http://maven.apache.org/plugins/maven-site-plugin/
 .. _`Sphinx`: http://sphinx.pocoo.org/
 .. _`Sphinx first steps tutorial`: http://sphinx.pocoo.org/tutorial.html
 .. _`conf.py`: http://sphinx.pocoo.org/config.html
 .. _`Sphinx' examples page`: http://sphinx.pocoo.org/examples.html
 .. _`reStructured Text`: http://docutils.sf.net/rst.html
-.. _`Markdown`: http://daringfireball.net/projects/markdown/
 .. _`Werkzeug`: http://werkzeug.pocoo.org/docs/
 .. _`Werkzeug's github page`: https://github.com/mitsuhiko/werkzeug/tree/master/docs
 .. _`Celery`: http://docs.celeryproject.org/en/latest/index.html
@@ -14,19 +12,10 @@
 
 .. _contents:
 
-Introduction
-------------
-
-The *sphinx-maven* plugin is a `Maven site plugin`_ that uses `Sphinx`_ to generate the main documentation.
-Sphinx itself was origially created by the Python community for the new Python documentation. It uses a
-plain text format called `reStructured Text` which it then compiles into a variety of documentation formats
-such as HTML, LaTeX (for PDF), epub. reStructured Text is similar to `Markdown`_ but - at least in Sphinx -
-has better support for multi-page documentation. 
-
 Basic Usage
------------
+===========
 
-First, create a folder ``src/site/sphinx``. This folder will contain the reStructured Text source files plus
+First, create a folder ``src/site/sphinx``. This folder will contain the `reStructured Text`_ source files plus
 any additional things like themes and configuration. The name of the folder can be changed via options should
 you want a different folder.
 
