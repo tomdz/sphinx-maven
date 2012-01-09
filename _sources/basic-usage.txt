@@ -48,7 +48,7 @@ Finally, add the sphinx maven plugin to your ``pom.xml``::
         <plugin>
           <groupId>org.tomdz.maven</groupId>
           <artifactId>sphinx-maven-plugin</artifactId>
-          <version>1.0.0-SNAPSHOT</version>
+          <version>1.0.0</version>
         </plugin>
       </plugins>
     </reporting>
@@ -74,13 +74,13 @@ be used with both Maven 2 and Maven 3::
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-site-plugin</artifactId>
-              <version>3.0-beta-3</version>
+              <version>3.0</version>
               <configuration>
                 <reportPlugins>
                   <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
-                    <version>2.2</version>
+                    <version>2.4</version>
                     <reportSets>
                       <reportSet>
                         <reports></reports>
@@ -90,7 +90,7 @@ be used with both Maven 2 and Maven 3::
                   <plugin>
                     <groupId>org.tomdz.maven</groupId>
                     <artifactId>sphinx-maven-plugin</artifactId>
-                    <version>1.0.0-SNAPSHOT</version>
+                    <version>1.0.0</version>
                   </plugin>
                 </reportPlugins>
               </configuration>
