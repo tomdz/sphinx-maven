@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
     <groupId>org.sonatype.oss</groupId>
     <artifactId>oss-parent</artifactId>
@@ -11,7 +9,7 @@
   <groupId>org.tomdz.maven</groupId>
   <artifactId>sphinx-maven-plugin</artifactId>
   <packaging>maven-plugin</packaging>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <url>http://www.tomdz.org</url>
   <name>sphinx-maven</name>
   <description>Maven plugin that creates the site with Sphinx</description>
@@ -242,7 +240,7 @@
         <version>2.4</version>
         <reportSets>
           <reportSet>
-            <reports></reports>
+            <reports />
           </reportSet>
         </reportSets>
       </plugin>
@@ -264,7 +262,7 @@
       <plugin>
         <groupId>org.tomdz.maven</groupId>
         <artifactId>sphinx-maven-plugin</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
         <reportSets>
           <reportSet>
             <reports><report>generate</report></reports>
@@ -297,7 +295,7 @@
                   <version>2.4</version>
                   <reportSets>
                     <reportSet>
-                      <reports></reports>
+                      <reports />
                     </reportSet>
                   </reportSets>
                 </plugin>
