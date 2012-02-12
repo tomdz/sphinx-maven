@@ -61,6 +61,14 @@ public class SphinxMojo extends AbstractMavenReport
     private File sphinxSourceDirectory;
 
     /**
+     * The builder to use. See <a href="http://sphinx.pocoo.org/man/sphinx-build.html?highlight=command%20line">sphinx-build</a>
+     * for a list of supported builders.
+     *
+     * @parameter alias="builder" default-value="html"
+     */
+    private String builder;
+
+    /**
      * Whether Sphinx should generate verbose output.
      *
      * @parameter alias="verbose" default-value="true"
@@ -73,6 +81,13 @@ public class SphinxMojo extends AbstractMavenReport
      * @parameter alias="warningsAsErrors" default-value="false"
      */
     private boolean warningsAsErrors;
+
+    /**
+     * Whether Sphinx should generate output for all files instead of only the changed ons.
+     *
+     * @parameter alias="force" default-value="false"
+     */
+    private boolean force;
 
     @Override
     public String getDescription(Locale defaultLocale)
@@ -176,14 +191,20 @@ public class SphinxMojo extends AbstractMavenReport
             args.add("-v");
         }
         else {
-            args.add("-q");
+            args.add("-Q");
         }
         if (warningsAsErrors) {
             args.add("-W");
         }
+        if (force) {
+            args.add("-a");
+            args.add("-E");
+        }
+        if (builder != null) {
+            args.add("-b");
+            args.add(builder);
+        }
         args.add("-n");
-        args.add("-b");
-        args.add("html");
         args.add(sourceDirectory.getAbsolutePath());
         args.add(outputDirectory.getAbsolutePath());
 
