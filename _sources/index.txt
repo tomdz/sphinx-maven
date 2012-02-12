@@ -18,5 +18,6 @@ The *sphinx-maven* plugin is BSD licensed just as Sphinx itself is.
    :maxdepth: 2
 
    basic-usage
+   configuration
    faq
    javadoc </apidocs/index.html>
