@@ -47,7 +47,6 @@ public class SphinxMojo extends AbstractMavenReport
      *
      * @parameter expression="${project.reporting.outputDirectory}"
      * @required
-     * @readonly
      */
     private File outputDirectory;
 
@@ -83,7 +82,7 @@ public class SphinxMojo extends AbstractMavenReport
     private boolean warningsAsErrors;
 
     /**
-     * Whether Sphinx should generate output for all files instead of only the changed ons.
+     * Whether Sphinx should generate output for all files instead of only the changed ones.
      *
      * @parameter alias="force" default-value="false"
      */
