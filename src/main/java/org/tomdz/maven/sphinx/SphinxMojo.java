@@ -14,6 +14,7 @@ import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 import org.apache.commons.io.IOUtils;
 import org.apache.maven.doxia.siterenderer.Renderer;
+import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReportException;
@@ -128,6 +129,17 @@ public class SphinxMojo extends AbstractMavenReport
     protected MavenProject getProject()
     {
         return project;
+    }
+
+    @Override
+    public void execute() throws MojoExecutionException
+    {
+        try {
+            executeReport(Locale.getDefault());
+        }
+        catch (MavenReportException ex) {
+            throw new MojoExecutionException("Failed to run the report", ex);
+        }
     }
 
     @Override
