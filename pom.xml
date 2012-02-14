@@ -286,7 +286,7 @@
       <plugin>
         <groupId>org.tomdz.maven</groupId>
         <artifactId>sphinx-maven-plugin</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>1.0.1</version>
         <reportSets>
           <reportSet>
             <reports><report>generate</report></reports>
@@ -353,7 +353,7 @@
                 <plugin>
                   <groupId>org.tomdz.maven</groupId>
                   <artifactId>sphinx-maven-plugin</artifactId>
-                  <version>1.0.1-SNAPSHOT</version>
+                  <version>1.0.1</version>
                 </plugin>
               </reportPlugins>
             </configuration>
@@ -368,7 +368,7 @@
           <plugin>
             <groupId>org.tomdz.maven</groupId>
             <artifactId>sphinx-maven-plugin</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>1.0.1</version>
             <configuration>
               <outputDirectory>${project.build.directory}/docs</outputDirectory>
             </configuration>
