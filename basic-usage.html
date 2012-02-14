@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Basic Usage &mdash; Sphinx-Maven 1.0.0 documentation</title>
+    <title>Creating the documentation &mdash; Sphinx-Maven 1.0.0 documentation</title>
     
     <link rel="stylesheet" href="_static/sphinx-maven.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -50,8 +50,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="basic-usage">
-<span id="contents"></span><h1>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="creating-the-documentation">
+<span id="contents"></span><h1>Creating the documentation<a class="headerlink" href="#creating-the-documentation" title="Permalink to this headline">¶</a></h1>
 <p>First, create a folder <tt class="docutils literal"><span class="pre">src/site/sphinx</span></tt>. This folder will contain the <a class="reference external" href="http://docutils.sf.net/rst.html">reStructured Text</a> source files plus
 any additional things like themes and configuration. The name of the folder can be changed via options should
 you want a different folder.</p>
@@ -66,7 +66,10 @@ tasks. Basically what you need is</p>
 <p>For good examples of documentation, see <a class="reference external" href="http://sphinx.pocoo.org/examples.html">Sphinx&#8217; examples page</a>.  The documentation for this plugin itself is
 based on the documentation for <a class="reference external" href="http://werkzeug.pocoo.org/docs/">Werkzeug</a> (documentation source for it can be found on <a class="reference external" href="https://github.com/mitsuhiko/werkzeug/tree/master/docs">Werkzeug&#8217;s github page</a>)
 and <a class="reference external" href="http://docs.celeryproject.org/en/latest/index.html">Celery</a> (documentation source can be found on <a class="reference external" href="http://docs.celeryproject.org/en/latest/index.html">Celery&#8217;s github page</a>).</p>
-<p>Finally, add the sphinx maven plugin to your <tt class="docutils literal"><span class="pre">pom.xml</span></tt>:</p>
+</div>
+<div class="section" id="running-as-part-of-the-site-lifecycle">
+<h1>Running as part of the <tt class="docutils literal"><span class="pre">site</span></tt> lifecycle<a class="headerlink" href="#running-as-part-of-the-site-lifecycle" title="Permalink to this headline">¶</a></h1>
+<p>Simply add the sphinx maven plugin to your <tt class="docutils literal"><span class="pre">pom.xml</span></tt>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">reporting</span><span class="o">&gt;</span>
   <span class="o">&lt;</span><span class="n">plugins</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="n">plugin</span><span class="o">&gt;</span>
@@ -82,7 +85,7 @@ and <a class="reference external" href="http://docs.celeryproject.org/en/latest/
     <span class="o">&lt;</span><span class="n">plugin</span><span class="o">&gt;</span>
       <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="o">.</span><span class="n">tomdz</span><span class="o">.</span><span class="n">maven</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
       <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">sphinx</span><span class="o">-</span><span class="n">maven</span><span class="o">-</span><span class="n">plugin</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
-      <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">1.0</span><span class="o">.</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">1.0</span><span class="o">.</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
     <span class="o">&lt;/</span><span class="n">plugin</span><span class="o">&gt;</span>
   <span class="o">&lt;/</span><span class="n">plugins</span><span class="o">&gt;</span>
 <span class="o">&lt;/</span><span class="n">reporting</span><span class="o">&gt;</span>
@@ -123,7 +126,7 @@ be used with both Maven 2 and Maven 3:</p>
               &lt;plugin&gt;
                 &lt;groupId&gt;org.tomdz.maven&lt;/groupId&gt;
                 &lt;artifactId&gt;sphinx-maven-plugin&lt;/artifactId&gt;
-                &lt;version&gt;1.0.0&lt;/version&gt;
+                &lt;version&gt;1.0.1&lt;/version&gt;
               &lt;/plugin&gt;
             &lt;/reportPlugins&gt;
           &lt;/configuration&gt;
@@ -141,6 +144,38 @@ and the site plugin see the <a class="reference external" href="https://cwiki.ap
 </div>
 <p>This will generate the documentation in the <cite>target/site</cite> folder.</p>
 </div>
+<div class="section" id="running-as-part-of-the-normal-lifecycle">
+<h1>Running as part of the normal lifecycle<a class="headerlink" href="#running-as-part-of-the-normal-lifecycle" title="Permalink to this headline">¶</a></h1>
+<p>You can also bind the plugin to a normal lifecycle phase. This is for instance useful if you want to generate a
+documentation artifact and deploy it somewhere.</p>
+<p>The plugin configuration is pretty much the same, the only difference is that you need to add an <tt class="docutils literal"><span class="pre">execution</span></tt> section.
+It might also be useful to change the <tt class="docutils literal"><span class="pre">outputDirectory</span></tt> to a different folder as the plugin by default puts the
+generated documentation into the <tt class="docutils literal"><span class="pre">target/site</span></tt> folder.</p>
+<p>A sample <tt class="docutils literal"><span class="pre">pom.xml</span></tt> plugin section could look like this:</p>
+<div class="highlight-python"><pre>&lt;build&gt;
+  &lt;plugins&gt;
+    ...
+    &lt;plugin&gt;
+      &lt;groupId&gt;org.tomdz.maven&lt;/groupId&gt;
+      &lt;artifactId&gt;sphinx-maven-plugin&lt;/artifactId&gt;
+      &lt;version&gt;1.0.1&lt;/version&gt;
+      &lt;configuration&gt;
+        &lt;outputDirectory&gt;${project.build.directory}/docs&lt;/outputDirectory&gt;
+      &lt;/configuration&gt;
+      &lt;executions&gt;
+        &lt;execution&gt;
+          &lt;phase&gt;package&lt;/phase&gt;
+          &lt;goals&gt;
+            &lt;goal&gt;generate&lt;/goal&gt;
+          &lt;/goals&gt;
+        &lt;/execution&gt;
+      &lt;/executions&gt;
+    &lt;/plugin&gt;
+    ...
+  &lt;/plugins&gt;
+&lt;/build&gt;</pre>
+</div>
+</div>
 
 
           </div>
@@ -150,7 +185,9 @@ and the site plugin see the <a class="reference external" href="https://cwiki.ap
         <div class="sphinxsidebarwrapper">
 <h3>All Topics</h3>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="">Basic Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Creating the documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#running-as-part-of-the-site-lifecycle">Running as part of the <tt class="docutils literal"><span class="pre">site</span></tt> lifecycle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#running-as-part-of-the-normal-lifecycle">Running as part of the normal lifecycle</a></li>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
 </ul>

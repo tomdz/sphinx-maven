@@ -12,8 +12,8 @@
 
 .. _contents:
 
-Basic Usage
-===========
+Creating the documentation
+==========================
 
 First, create a folder ``src/site/sphinx``. This folder will contain the `reStructured Text`_ source files plus
 any additional things like themes and configuration. The name of the folder can be changed via options should
@@ -31,7 +31,10 @@ For good examples of documentation, see `Sphinx' examples page`_.  The documenta
 based on the documentation for `Werkzeug`_ (documentation source for it can be found on `Werkzeug's github page`_)
 and `Celery`_ (documentation source can be found on `Celery's github page`_).
 
-Finally, add the sphinx maven plugin to your ``pom.xml``::
+Running as part of the ``site`` lifecycle 
+=========================================
+
+Simply add the sphinx maven plugin to your ``pom.xml``::
 
     <reporting>
       <plugins>
@@ -48,7 +51,7 @@ Finally, add the sphinx maven plugin to your ``pom.xml``::
         <plugin>
           <groupId>org.tomdz.maven</groupId>
           <artifactId>sphinx-maven-plugin</artifactId>
-          <version>1.0.0</version>
+          <version>1.0.1</version>
         </plugin>
       </plugins>
     </reporting>
@@ -90,7 +93,7 @@ be used with both Maven 2 and Maven 3::
                   <plugin>
                     <groupId>org.tomdz.maven</groupId>
                     <artifactId>sphinx-maven-plugin</artifactId>
-                    <version>1.0.0</version>
+                    <version>1.0.1</version>
                   </plugin>
                 </reportPlugins>
               </configuration>
@@ -108,3 +111,38 @@ Now all you need to do is to generate the documentation::
     mvn site
 
 This will generate the documentation in the `target/site` folder.
+
+Running as part of the normal lifecycle 
+=======================================
+
+You can also bind the plugin to a normal lifecycle phase. This is for instance useful if you want to generate a
+documentation artifact and deploy it somewhere.
+
+The plugin configuration is pretty much the same, the only difference is that you need to add an ``execution`` section.
+It might also be useful to change the ``outputDirectory`` to a different folder as the plugin by default puts the
+generated documentation into the ``target/site`` folder.
+
+A sample ``pom.xml`` plugin section could look like this::
+
+    <build>
+      <plugins>
+        ...
+        <plugin>
+          <groupId>org.tomdz.maven</groupId>
+          <artifactId>sphinx-maven-plugin</artifactId>
+          <version>1.0.1</version>
+          <configuration>
+            <outputDirectory>${project.build.directory}/docs</outputDirectory>
+          </configuration>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>generate</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        ...
+      </plugins>
+    </build>

@@ -17,14 +17,18 @@
 -docencoding
 'UTF-8'
 -doctitle
-'sphinx-maven 1.0.1-SNAPSHOT API'
+'sphinx-maven 1.0.2-SNAPSHOT API'
 -link
 'http://java.sun.com/javase/6/docs/api'
 -linkoffline
 'http://download.oracle.com/javase/6/docs/api' '/Users/tomdz/Documents/open-source/sphinx-maven/target/javadoc-bundle-options'
 -stylesheetfile
 '/Users/tomdz/Documents/open-source/sphinx-maven/src/site/javadoc/stylesheet.css'
+-tag
+"goal:a:Maven goal"
+-tag
+"phase:a:Maven phase"
 -use
 -version
 -windowtitle
-'sphinx-maven 1.0.1-SNAPSHOT API'
+'sphinx-maven 1.0.2-SNAPSHOT API'

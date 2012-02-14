@@ -1,1 +1,0 @@
-/Library/Java/JavaVirtualMachines/1.6.0_26-b03-383.jdk/Contents/Home/bin/javadoc -J-Xmx1024m @options @packages
