@@ -9,7 +9,7 @@
   <groupId>org.tomdz.maven</groupId>
   <artifactId>sphinx-maven-plugin</artifactId>
   <packaging>maven-plugin</packaging>
-  <version>1.0.1</version>
+  <version>1.0.2-SNAPSHOT</version>
   <url>http://www.tomdz.org</url>
   <name>sphinx-maven</name>
   <description>Maven plugin that creates the site with Sphinx</description>
@@ -286,7 +286,7 @@
       <plugin>
         <groupId>org.tomdz.maven</groupId>
         <artifactId>sphinx-maven-plugin</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.2-SNAPSHOT</version>
         <reportSets>
           <reportSet>
             <reports><report>generate</report></reports>
