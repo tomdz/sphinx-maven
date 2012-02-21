@@ -69,6 +69,13 @@ public class SphinxMojo extends AbstractMavenReport
     private String builder;
 
     /**
+     * The <a href="http://sphinx.pocoo.org/markup/misc.html#tags">tags</a> to pass to the sphinx build (-t).
+     *
+     * @parameter alias="tags"
+     */
+    private List<String> tags;
+
+    /**
      * Whether Sphinx should generate verbose output.
      *
      * @parameter alias="verbose" default-value="true"
@@ -214,6 +221,12 @@ public class SphinxMojo extends AbstractMavenReport
         if (builder != null) {
             args.add("-b");
             args.add(builder);
+        }
+        if (tags != null && !tags.isEmpty()) {
+            for (String tag : tags) {
+                args.add("-t");
+                args.add(tag);
+            }
         }
         args.add("-n");
         args.add(sourceDirectory.getAbsolutePath());
