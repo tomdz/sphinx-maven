@@ -34,7 +34,7 @@ documentation out of [reStructured Text](http://docutils.sf.net/rst.html) source
 				    <plugin>
 				      <groupId>org.tomdz.maven</groupId>
 				      <artifactId>sphinx-maven-plugin</artifactId>
-				      <version>1.0.0-SNAPSHOT</version>
+				      <version>1.0.2</version>
 				    </plugin>
 				  </plugins>
 				</reporting>
@@ -75,7 +75,7 @@ documentation out of [reStructured Text](http://docutils.sf.net/rst.html) source
                               <plugin>
                                 <groupId>org.tomdz.maven</groupId>
                                 <artifactId>sphinx-maven-plugin</artifactId>
-                                <version>1.0.0-SNAPSHOT</version>
+                                <version>1.0.2</version>
                               </plugin>
                             </reportPlugins>
                           </configuration>
