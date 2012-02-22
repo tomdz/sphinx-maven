@@ -1,5 +1,5 @@
 .. _`Sphinx commandline documentation`: http://sphinx.pocoo.org/man/sphinx-build.html?highlight=command%20line
-.. _`Sphinx tag usage documentation`: http://sphinx.pocoo.org/markup/misc.html#tags
+.. _`Sphinx tag documentation`: http://sphinx.pocoo.org/markup/misc.html#tags
 
 .. _contents:
 
@@ -17,5 +17,5 @@ Parameter            Description                                                
 ``verbose``          Whether Sphinx should generate verbose output.                                                    ``true``
 ``warningsAsErrors`` Whether warnings should be treated as errors.                                                     ``false``
 ``force``            Whether Sphinx should generate output for all files instead of only the changed ones.             ``false``
-``tags``             Additional tags to pass to Sphinx. See `Sphinx tag usage documentation`_ for more information.    
+``tags``             Additional tags to pass to Sphinx. See the `Sphinx tag documentation`_ for more information.      
 ==================== ================================================================================================= ========================================
