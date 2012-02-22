@@ -69,7 +69,7 @@ public class SphinxMojo extends AbstractMavenReport
     private String builder;
 
     /**
-     * The <a href="http://sphinx.pocoo.org/markup/misc.html#tags">tags</a> to pass to the sphinx build (-t).
+     * The <a href="http://sphinx.pocoo.org/markup/misc.html#tags">tags</a> to pass to the sphinx build.
      *
      * @parameter alias="tags"
      */
@@ -158,8 +158,7 @@ public class SphinxMojo extends AbstractMavenReport
 
     private void unpackSphinx() throws MavenReportException
     {
-        if (!sphinxSourceDirectory.exists() && !sphinxSourceDirectory.mkdirs())
-        {
+        if (!sphinxSourceDirectory.exists() && !sphinxSourceDirectory.mkdirs()) {
             throw new MavenReportException("Could not generate the temporary directory " + sphinxSourceDirectory.getAbsolutePath() + " for the sphinx sources"); 
         }
 
@@ -173,7 +172,7 @@ public class SphinxMojo extends AbstractMavenReport
             while (entry != null) {
                 File archiveEntry = new File(sphinxSourceDirectory, entry.getName());
                 archiveEntry.getParentFile().mkdirs();
-                if (entry.isDirectory()){
+                if (entry.isDirectory()) {
                     archiveEntry.mkdir();
                     entry = input.getNextEntry();
                     continue;
@@ -222,7 +221,7 @@ public class SphinxMojo extends AbstractMavenReport
             args.add("-b");
             args.add(builder);
         }
-        if (tags != null && !tags.isEmpty()) {
+        if ((tags != null) && !tags.isEmpty()) {
             for (String tag : tags) {
                 args.add("-t");
                 args.add(tag);
