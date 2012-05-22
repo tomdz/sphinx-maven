@@ -6,9 +6,11 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
@@ -50,6 +52,30 @@ public class SphinxMojo extends AbstractMavenReport
      * @required
      */
     private File outputDirectory;
+    
+    /**
+     * Name of the report.
+     *
+     * @parameter expression="Documentation via sphinx"
+     * @required
+     */
+    private String name;
+    
+    /**
+     * Description of the report.
+     *
+     * @parameter expression="Documentation via sphinx"
+     * @required
+     */
+    private String description;
+    
+    /**
+     * The base name used to create report's output file(s).
+     *
+     * @parameter expression="index"
+     * @required
+     */
+    private String outputName;
 
     /**
      * The directory for sphinx' source.
@@ -99,19 +125,19 @@ public class SphinxMojo extends AbstractMavenReport
     @Override
     public String getDescription(Locale defaultLocale)
     {
-        return "Documentation via sphinx";
+        return description;
     }
 
     @Override
     public String getName(Locale defaultLocale)
     {
-        return "Documentation via sphinx";
+        return name;
     }
 
     @Override
     public String getOutputName()
     {
-        return "index";
+        return outputName;
     }
 
     @Override

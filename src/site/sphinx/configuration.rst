@@ -13,6 +13,9 @@ Parameter            Description                                                
 ==================== ================================================================================================= ========================================
 ``sourceDirectory``  The directory containing the documentation source.                                                ``${basedir}/src/site/sphinx``
 ``outputDirectory``  The directory where the generated output will be placed.                                          ``${project.reporting.outputDirectory}``
+``outputName``       The base name used to create report's output file(s).                                             ``index``
+``name``             The name of the report.                                                                           ``Documentation via sphinx``
+``description``      The description of the report.                                                                    ``Documentation via sphinx``
 ``builder``          The builder to use. See the `Sphinx commandline documentation`_ for a list of possible builders.  ``html``
 ``verbose``          Whether Sphinx should generate verbose output.                                                    ``true``
 ``warningsAsErrors`` Whether warnings should be treated as errors.                                                     ``false``
