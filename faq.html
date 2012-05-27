@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Introduction &mdash; Sphinx-Maven 1.0.2 documentation</title>
+    <title>Frequently Asked Questions &mdash; Sphinx-Maven 1.0.2 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,8 +27,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/bootstrap.js"></script>
-    <link rel="top" title="Sphinx-Maven 1.0.2 documentation" href="#" />
-    <link rel="next" title="Creating the documentation" href="basic-usage.html" />
+    <link rel="top" title="Sphinx-Maven 1.0.2 documentation" href="index.html" />
+    <link rel="prev" title="Configuration" href="configuration.html" />
 <script type="text/javascript">
 (function () {
   /**
@@ -95,46 +95,42 @@
   <div id="navbar" class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container-fluid">
-        <a class="brand" href="#">Sphinx-Maven</a>
+        <a class="brand" href="index.html">Sphinx-Maven</a>
         <span class="navbar-text pull-left"><b>1.0.2</b></span>
           <ul class="nav">
             <li class="divider-vertical"></li>
             
               <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Site <b class="caret"></b></a>
-  <ul class="dropdown-menu globaltoc"><ul>
+  <a href="index.html" class="dropdown-toggle" data-toggle="dropdown">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="basic-usage.html">Creating the documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic-usage.html#running-as-part-of-the-site-lifecycle">Running as part of the <tt class="docutils literal"><span class="pre">site</span></tt> lifecycle</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic-usage.html#running-as-part-of-the-normal-lifecycle">Running as part of the normal lifecycle</a></li>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Frequently Asked Questions</a></li>
 </ul>
 </ul>
 </li>
               <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
   <ul class="dropdown-menu localtoc"><ul>
-<li><a class="reference internal" href="#">Introduction</a><ul>
-</ul>
-</li>
+<li><a class="reference internal" href="#">Frequently Asked Questions</a></li>
 </ul>
 </ul>
   <!--<span class="localtoc"><ul>
-<li><a class="reference internal" href="#">Introduction</a><ul>
-</ul>
-</li>
+<li><a class="reference internal" href="#">Frequently Asked Questions</a></li>
 </ul>
 </span>-->
 </li>
             
             
               
-  <li><a href="basic-usage.html"
-         title="next chapter">Creating the documentation &raquo;</a></li>
+  <li><a href="configuration.html"
+         title="previous chapter">&laquo; Configuration</a></li>
             
             
               
-  <li><a href="_sources/index.txt"
+  <li><a href="_sources/faq.txt"
          rel="nofollow">Source</a></li>
             
           </ul>
@@ -154,23 +150,24 @@
 
 <div class="container">
    
-  <div class="section" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p>The <em>sphinx-maven</em> plugin is a <a class="reference external" href="http://maven.apache.org/plugins/maven-site-plugin/">Maven site plugin</a> that uses <a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a> to generate the main documentation.
-Sphinx itself was origially created by the Python community for the new Python documentation. It uses a
-plain text format called <a class="reference external" href="http://docutils.sf.net/rst.html">reStructured Text</a> which it then compiles into a variety of documentation formats
-such as HTML, LaTeX (for PDF), epub. reStructured Text is similar to <a class="reference external" href="http://daringfireball.net/projects/markdown/">Markdown</a> but - at least via Sphinx -
-has better support for multi-page documentation.</p>
-<p>The <em>sphinx-maven</em> plugin is BSD licensed just as Sphinx itself is.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="basic-usage.html">Creating the documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basic-usage.html#running-as-part-of-the-site-lifecycle">Running as part of the <tt class="docutils literal"><span class="pre">site</span></tt> lifecycle</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basic-usage.html#running-as-part-of-the-normal-lifecycle">Running as part of the normal lifecycle</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
-</ul>
+  <div class="section" id="frequently-asked-questions">
+<h1>Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
+<p>When I put documentation generated by Sphinx on <a class="reference external" href="http://pages.github.com/">Github pages</a>, then it looks all mangled and broken. Why is that ?</p>
+<blockquote>
+<div><p>Github pages by default uses a system called <a class="reference external" href="https://github.com/mojombo/jekyll/">Jekyll</a> to generate the documentation. This usually
+works just fine with already generated content. However Jekyll regards directory names beginning
+with an underscore to be special and won&#8217;t make them available on the website. Sphinx however uses
+directories like <cite>_source</cite> and <cite>_static</cite> for the site which means it won&#8217;t work properly. Fortunately
+the fix is easy. In your <cite>gh-pages</cite> branch of your project on github, simply create a file called <cite>.nojekyll</cite>
+in the root folder. Once you pushed that file, Jekyll will be turned off for the site and the
+documentation should look as intended.
+If you are using the <a class="reference external" href="https://github.com/github/maven-plugins">Github maven plugins</a> to deploy your site, then you can tell the <cite>site-maven-plugin</cite> to
+automatically maintain the <cite>.nojekyll</cite> file by adding:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">noJekyll</span><span class="o">&gt;</span><span class="n">true</span><span class="o">&lt;/</span><span class="n">noJekyll</span><span class="o">&gt;</span>
+</pre></div>
 </div>
+<p>to the configuration of the <cite>site-maven-plugin</cite> plugin (since version 0.5 of the plugin).</p>
+</div></blockquote>
 </div>
 
 

@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Introduction &mdash; Sphinx-Maven 1.0.2 documentation</title>
+    <title>Configuration &mdash; Sphinx-Maven 1.0.2 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,8 +27,9 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/bootstrap.js"></script>
-    <link rel="top" title="Sphinx-Maven 1.0.2 documentation" href="#" />
-    <link rel="next" title="Creating the documentation" href="basic-usage.html" />
+    <link rel="top" title="Sphinx-Maven 1.0.2 documentation" href="index.html" />
+    <link rel="next" title="Frequently Asked Questions" href="faq.html" />
+    <link rel="prev" title="Creating the documentation" href="basic-usage.html" />
 <script type="text/javascript">
 (function () {
   /**
@@ -95,18 +96,18 @@
   <div id="navbar" class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container-fluid">
-        <a class="brand" href="#">Sphinx-Maven</a>
+        <a class="brand" href="index.html">Sphinx-Maven</a>
         <span class="navbar-text pull-left"><b>1.0.2</b></span>
           <ul class="nav">
             <li class="divider-vertical"></li>
             
               <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Site <b class="caret"></b></a>
-  <ul class="dropdown-menu globaltoc"><ul>
+  <a href="index.html" class="dropdown-toggle" data-toggle="dropdown">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="basic-usage.html">Creating the documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic-usage.html#running-as-part-of-the-site-lifecycle">Running as part of the <tt class="docutils literal"><span class="pre">site</span></tt> lifecycle</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic-usage.html#running-as-part-of-the-normal-lifecycle">Running as part of the normal lifecycle</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
 </ul>
 </ul>
@@ -114,15 +115,11 @@
               <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
   <ul class="dropdown-menu localtoc"><ul>
-<li><a class="reference internal" href="#">Introduction</a><ul>
-</ul>
-</li>
+<li><a class="reference internal" href="#">Configuration</a></li>
 </ul>
 </ul>
   <!--<span class="localtoc"><ul>
-<li><a class="reference internal" href="#">Introduction</a><ul>
-</ul>
-</li>
+<li><a class="reference internal" href="#">Configuration</a></li>
 </ul>
 </span>-->
 </li>
@@ -130,11 +127,13 @@
             
               
   <li><a href="basic-usage.html"
-         title="next chapter">Creating the documentation &raquo;</a></li>
+         title="previous chapter">&laquo; Creating the documentation</a></li>
+  <li><a href="faq.html"
+         title="next chapter">Frequently Asked Questions &raquo;</a></li>
             
             
               
-  <li><a href="_sources/index.txt"
+  <li><a href="_sources/configuration.txt"
          rel="nofollow">Source</a></li>
             
           </ul>
@@ -154,23 +153,64 @@
 
 <div class="container">
    
-  <div class="section" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p>The <em>sphinx-maven</em> plugin is a <a class="reference external" href="http://maven.apache.org/plugins/maven-site-plugin/">Maven site plugin</a> that uses <a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a> to generate the main documentation.
-Sphinx itself was origially created by the Python community for the new Python documentation. It uses a
-plain text format called <a class="reference external" href="http://docutils.sf.net/rst.html">reStructured Text</a> which it then compiles into a variety of documentation formats
-such as HTML, LaTeX (for PDF), epub. reStructured Text is similar to <a class="reference external" href="http://daringfireball.net/projects/markdown/">Markdown</a> but - at least via Sphinx -
-has better support for multi-page documentation.</p>
-<p>The <em>sphinx-maven</em> plugin is BSD licensed just as Sphinx itself is.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="basic-usage.html">Creating the documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basic-usage.html#running-as-part-of-the-site-lifecycle">Running as part of the <tt class="docutils literal"><span class="pre">site</span></tt> lifecycle</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basic-usage.html#running-as-part-of-the-normal-lifecycle">Running as part of the normal lifecycle</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
-</ul>
-</div>
+  <div class="section" id="configuration">
+<span id="contents"></span><h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
+<p>The <tt class="docutils literal"><span class="pre">sphinx-maven</span></tt> plugin has these configuration options:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="62%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Description</th>
+<th class="head">Default value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">sourceDirectory</span></tt></td>
+<td>The directory containing the documentation source.</td>
+<td><tt class="docutils literal"><span class="pre">${basedir}/src/site/sphinx</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">outputDirectory</span></tt></td>
+<td>The directory where the generated output will be placed.</td>
+<td><tt class="docutils literal"><span class="pre">${project.reporting.outputDirectory}</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">outputName</span></tt></td>
+<td>The base name used to create the report&#8217;s output file(s).</td>
+<td><tt class="docutils literal"><span class="pre">index</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">name</span></tt></td>
+<td>The name of the report.</td>
+<td><tt class="docutils literal"><span class="pre">Documentation</span> <span class="pre">via</span> <span class="pre">sphinx</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">description</span></tt></td>
+<td>The description of the report.</td>
+<td><tt class="docutils literal"><span class="pre">Documentation</span> <span class="pre">via</span> <span class="pre">sphinx</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">builder</span></tt></td>
+<td>The builder to use. See the <a class="reference external" href="http://sphinx.pocoo.org/man/sphinx-build.html?highlight=command%20line">Sphinx commandline documentation</a> for a list of possible builders.</td>
+<td><tt class="docutils literal"><span class="pre">html</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">verbose</span></tt></td>
+<td>Whether Sphinx should generate verbose output.</td>
+<td><tt class="docutils literal"><span class="pre">true</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">warningsAsErrors</span></tt></td>
+<td>Whether warnings should be treated as errors.</td>
+<td><tt class="docutils literal"><span class="pre">false</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">force</span></tt></td>
+<td>Whether Sphinx should generate output for all files instead of only the changed ones.</td>
+<td><tt class="docutils literal"><span class="pre">false</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">tags</span></tt></td>
+<td>Additional tags to pass to Sphinx. See the <a class="reference external" href="http://sphinx.pocoo.org/markup/misc.html#tags">Sphinx tag documentation</a> for more information.</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 
