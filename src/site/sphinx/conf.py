@@ -46,10 +46,13 @@ pygments_style = 'trac'
 master_doc = 'index'
 
 # -- Options for HTML output ---------------------------------------------------
+sys.path.append(os.path.abspath('_themes'))
 
-html_theme = 'sphinx-maven'
+html_theme = 'bootstrap'
 
-html_theme_path = ["_theme"]
+html_theme_path = ["_themes"]
+
+html_short_title = "Sphinx-Maven"
 
 html_static_path = ['_static']
 
