@@ -17,7 +17,7 @@
 -docencoding
 'UTF-8'
 -doctitle
-'sphinx-maven 1.0.2-SNAPSHOT API'
+'sphinx-maven 1.0.3-SNAPSHOT API'
 -link
 'http://java.sun.com/javase/6/docs/api'
 -linkoffline
@@ -31,4 +31,4 @@
 -use
 -version
 -windowtitle
-'sphinx-maven 1.0.2-SNAPSHOT API'
+'sphinx-maven 1.0.3-SNAPSHOT API'
