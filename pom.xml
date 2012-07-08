@@ -58,6 +58,11 @@
       <version>2.0.5</version>
     </dependency>
     <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-plugin-descriptor</artifactId>
+      <version>2.2.1</version>
+    </dependency>
+    <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-compress</artifactId>
       <version>1.1</version>
@@ -355,6 +360,10 @@
                   <groupId>org.tomdz.maven</groupId>
                   <artifactId>sphinx-maven-plugin</artifactId>
                   <version>1.0.3-SNAPSHOT</version>
+                  <configuration>
+                    <fork>true</fork>
+                    <argLine>-Xmx256m -XX:MaxPermSize=128m</argLine>
+                  </configuration>
                 </plugin>
               </reportPlugins>
             </configuration>
@@ -369,7 +378,7 @@
           <plugin>
             <groupId>org.tomdz.maven</groupId>
             <artifactId>sphinx-maven-plugin</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.3-SNAPSHOT</version>
             <configuration>
               <outputDirectory>${project.build.directory}/docs</outputDirectory>
             </configuration>
