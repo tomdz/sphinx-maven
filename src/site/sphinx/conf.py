@@ -21,7 +21,7 @@ import sys, os
 
 needs_sphinx = '1.0'
 
-extensions = []
+extensions = ['sphinx.ext.autodoc','rst2pdf.pdfbuilder']
 
 templates_path = ['_templates']
 
@@ -66,3 +66,8 @@ html_sidebars = {
     'index': ['globaltoc.html', 'relations.html', 'sidebarintro.html', 'searchbox.html'],
     '**': ['globaltoc.html', 'relations.html', 'sidebarintro.html', 'searchbox.html']
 }
+
+# -- Options for PDF output ---------------------------------------------------
+pdf_documents = [
+    ('index', u'Sphinx-Maven', u'Sphinx-Maven', u'Thomas Dudziak'),
+]

@@ -10,7 +10,7 @@ The *sphinx-maven* plugin is a `Maven site plugin`_ that uses `Sphinx`_ to gener
 Sphinx itself was origially created by the Python community for the new Python documentation. It uses a
 plain text format called `reStructured Text`_ which it then compiles into a variety of documentation formats
 such as HTML, LaTeX (for PDF), epub. reStructured Text is similar to `Markdown`_ but - at least via Sphinx -
-has better support for multi-page documentation. 
+has better support for multi-page documentation.
 
 The *sphinx-maven* plugin is BSD licensed just as Sphinx itself is.
 
@@ -19,5 +19,6 @@ The *sphinx-maven* plugin is BSD licensed just as Sphinx itself is.
 
    basic-usage
    configuration
+   development
    faq
    javadoc </apidocs/index.html>

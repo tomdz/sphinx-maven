@@ -1,0 +1,25 @@
+--- /Library/Python/2.7/site-packages/rst2pdf-0.92-py2.7.egg/rst2pdf/pdfbuilder.py	2012-07-08 12:37:09.000000000 -0700
++++ target/sphinx/rst2pdf/pdfbuilder.py	2012-07-14 22:11:20.000000000 -0700
+@@ -14,7 +14,11 @@
+ """
+ 
+ import logging
+-import parser
++try:
++    import parser
++except ImportError:
++    # parser is not available on Jython
++    parser = None
+ import re
+ import sys
+ import os
+@@ -814,6 +818,9 @@
+         # just replace all non-ASCII characters.
+         src = src.encode('ascii', 'replace')
+ 
++    if parser is None:
++        return True
++
+     try:
+         parser.suite(src)
+     except SyntaxError, UnicodeEncodeError:
