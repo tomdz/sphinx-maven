@@ -33,24 +33,24 @@ Building PDFs
 The ``sphinx-maven`` plugin has experimental support for PDF generation. You'll turn it on
 by using the pdf builder, e.g.::
 
-		<plugin>
-		  <groupId>org.tomdz.maven</groupId>
-		  <artifactId>sphinx-maven-plugin</artifactId>
-		  <version>1.0.3</version>
+    <plugin>
+      <groupId>org.tomdz.maven</groupId>
+      <artifactId>sphinx-maven-plugin</artifactId>
+      <version>1.0.3</version>
       <configuration>
         <builder>pdf</builder>
         <outputDirectory>${project.reporting.outputDirectory}/pdf</outputDirectory>
       </configuration>
-		</plugin>
+    </plugin>
 
 You'll likely also have to add some additional configuration options to your ``conf.py``
 file (usually in ``src/site/sphinx``) to tell the pdf builder what to do. At a minimum
 you'll probably need to point it to the index page by adding this to the end::
 
-		# -- Options for PDF output ---------------------------------------------------
-		pdf_documents = [
-		    ('index', u'<file name>', u'<document name>', u'<author>'),
-		]
+    # -- Options for PDF output ---------------------------------------------------
+    pdf_documents = [
+        ('index', u'<file name>', u'<document name>', u'<author>'),
+    ]
 
 For additional options see the Sphinx section of the `rst2pdf manual`_.
 
@@ -61,16 +61,16 @@ Sphinx is run via `Jython`_ which will generate lots of small classes for variou
 the plugin will use a fair amount of memory, especially PermGen space (a moderate plugin run will likely use about 80mb
 of PermGen space). Therefore we suggest to either run maven with at least 256mb of heap and 128mb of PermGen space, e.g.
 
-		MAVEN_OPTS="-Xmx256m -XX:MaxPermSize=128m" mvn site
+    MAVEN_OPTS="-Xmx256m -XX:MaxPermSize=128m" mvn site
 
 or use the fork parameter of the plugin, e.g.::
 
-		<plugin>
-		  <groupId>org.tomdz.maven</groupId>
-		  <artifactId>sphinx-maven-plugin</artifactId>
-		  <version>1.0.3</version>
-		  <configuration>
-		    <fork>true</fork>
-		    <argLine>-Xmx256m -XX:MaxPermSize=128m</argLine>
-		  </configuration>
-		</plugin>
+    <plugin>
+      <groupId>org.tomdz.maven</groupId>
+      <artifactId>sphinx-maven-plugin</artifactId>
+      <version>1.0.3</version>
+      <configuration>
+        <fork>true</fork>
+        <argLine>-Xmx256m -XX:MaxPermSize=128m</argLine>
+      </configuration>
+    </plugin>
