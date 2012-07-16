@@ -28,128 +28,55 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/bootstrap.js"></script>
     <link rel="top" title="Sphinx-Maven 1.0.2 documentation" href="index.html" />
-    <link rel="prev" title="Configuration" href="configuration.html" />
-<script type="text/javascript">
-(function () {
-  /**
-   * Patch TOC list.
-   *
-   * Will mutate the underlying span to have a correct ul for nav.
-   *
-   * @param $span: Span containing nested UL's to mutate.
-   * @param minLevel: Starting level for nested lists. (1: global, 2: local).
-   */
-  var patchToc = function ($ul, minLevel) {
-    var findA;
-
-    // Find all a "internal" tags, traversing recursively.
-    findA = function ($elem, level) {
-      var level = level || 0,
-        $items = $elem.find("> li > a.internal, > ul, > li > ul");
-
-      // Iterate everything in order.
-      $items.each(function (index, item) {
-        var $item = $(item),
-          tag = item.tagName.toLowerCase(),
-          pad = 15 + ((level - minLevel) * 10);
-
-        if (tag === 'a' && level >= minLevel) {
-          // Add to existing padding.
-          $item.css('padding-left', pad + "px");
-          console.log(level, $item, 'padding-left', pad + "px");
-        } else if (tag === 'ul') {
-          // Recurse.
-          findA($item, level + 1);
-        }
-      });
-    };
-
-    console.log("HERE");
-    findA($ul);
-  };
-
-  $(document).ready(function () {
-    // Add styling, structure to TOC's.
-    $(".dropdown-menu").each(function () {
-      $(this).find("ul").each(function (index, item){
-        var $item = $(item);
-        $item.addClass('unstyled');
-      });
-      $(this).find("li").each(function () {
-        $(this).parent().append(this);
-      });
-    });
-
-    // Patch in level.
-    patchToc($("ul.globaltoc"), 2);
-    patchToc($("ul.localtoc"), 2);
-
-    // Enable dropdown.
-    $('.dropdown-toggle').dropdown();
-  });
-}());
-</script>
-
+    <link rel="prev" title="Updating Sphinx" href="development.html" /> 
   </head>
   <body>
-  <div id="navbar" class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-      <div class="container-fluid">
-        <a class="brand" href="index.html">Sphinx-Maven</a>
-        <span class="navbar-text pull-left"><b>1.0.2</b></span>
-          <ul class="nav">
-            <li class="divider-vertical"></li>
-            
-              <li class="dropdown">
-  <a href="index.html" class="dropdown-toggle" data-toggle="dropdown">Site <b class="caret"></b></a>
-  <ul class="dropdown-menu globaltoc"><ul class="current">
+<div class="container">
+  <div class="row">
+    <div class="span3">
+      
+  <ul class="nav nav-list">
+    <li>
+      <a class="brand" href="index.html">Sphinx-Maven 1.0.2</a>
+    </li>
+    <li class="divider"></li>
+    
+      <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="basic-usage.html">Creating the documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic-usage.html#running-as-part-of-the-site-lifecycle">Running as part of the <tt class="docutils literal"><span class="pre">site</span></tt> lifecycle</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic-usage.html#running-as-part-of-the-normal-lifecycle">Running as part of the normal lifecycle</a></li>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html#building-pdfs">Building PDFs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html#a-note-on-memory-usage">A note on memory usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Updating Sphinx</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Frequently Asked Questions</a></li>
 </ul>
-</ul>
-</li>
-              <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
-  <ul class="dropdown-menu localtoc"><ul>
-<li><a class="reference internal" href="#">Frequently Asked Questions</a></li>
-</ul>
-</ul>
-  <!--<span class="localtoc"><ul>
-<li><a class="reference internal" href="#">Frequently Asked Questions</a></li>
-</ul>
-</span>-->
-</li>
-            
-            
-              
-  <li><a href="configuration.html"
-         title="previous chapter">&laquo; Configuration</a></li>
-            
-            
-              
+
+    
+    
+      
+  <li><a href="development.html"
+         title="previous chapter">&laquo; Updating Sphinx</a></li>
+    
+    
+      
   <li><a href="_sources/faq.txt"
          rel="nofollow">Source</a></li>
-            
-          </ul>
-          
-            
+    
+    <li class="divider"></li>
+    
+      
 <form class="navbar-search pull-right" style="margin-bottom:-3px;" action="search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <input type="hidden" name="check_keywords" value="yes" />
   <input type="hidden" name="area" value="default" />
 </form>
-          
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
+    
+  </ul>
 
-<div class="container">
-   
+    </div>
+    <div class="span9">
+      
   <div class="section" id="frequently-asked-questions">
 <h1>Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
 <p>When I put documentation generated by Sphinx on <a class="reference external" href="http://pages.github.com/">Github pages</a>, then it looks all mangled and broken. Why is that ?</p>
@@ -171,13 +98,15 @@ automatically maintain the <cite>.nojekyll</cite> file by adding:</p>
 </div>
 
 
+    </div>
+  </div>
 </div>
 <footer class="footer">
   <div class="container">
     <p class="pull-right"><a href="#">Back to top</a></p>
     <p>
         &copy; Copyright 2011, Thomas Dudziak.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.<br/>
     </p>
   </div>
 </footer>
