@@ -23,13 +23,42 @@ How the update script works
    that, the script downloads the ``ReportLab`` distribution directly, unpacks it,
    removes the native extensions (the setup script will be fine with it), and then
    runs the installation manually.
-8. ``rst2pdf`` itself also has a bug with Pyton (see this `rst2pdf bug`_) which we'll
+8. ``rst2pdf`` itself also has a bug with Jython (see this `rst2pdf bug`_) which we'll
    patch and then trigger Jython to pre-compile the module again.
 9. Finally, we create the ``sphinx.jar`` out of the installed modules, and move it to
    ``src/main/resources`` (which will cause it to be included as a file in the plugin).
 
+Steps 1-8 are performed by the `setup_jython_env.sh` script which is executed by
+the `update-sphinx.sh` script.
+
+Fixing bugs in one of the Python libraries
+==========================================
+
+Occasionally there are bugs in one of the python libraries, either plain bugs or bugs when running
+under Jython, that need to be fixed for sphinx-maven to work. In this case, you can use the
+`setup_jython_env.sh` script to setup an unpacked, editable sphinx jython environment:
+
+    ./src/main/build/setup_jython_env.sh
+
+This script will create a temporary folder `target/sphinx-tmp` into which it installs Jython and all
+relevant libraries plus patch them as necessary (as described above).
+
+Now you can simply use that environment directly:
+
+    "$SPHINX_MAVEN_DIR/target/sphinx-tmp/jython/bin/sphinx-build" -a -E -n -b pdf src/site/sphinx target/site/pdf
+
+where SPHINX_MAVEN_DIR points to where you have checked out the sphinx maven project.
+
+The neat thing with this is that you can now edit the python code directly. The packages are under
+
+    target/sphinx-tmp/jython/Lib/site-packages
+
+Once you're done, simply create a patch file to an untouched sphinx + dependencies installation
+(see below).
+
+
 Running normal Sphinx
----------------------
+=====================
 
 If you want to compare to the normal sphinx, install it like this::
 
