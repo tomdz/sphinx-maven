@@ -1,0 +1,13 @@
+diff -dur -x '*.pyc' -x '*.class' -x hyphen.mashed /Library/Python/2.5/site-packages/reportlab-2.5-py2.5-macosx-10.7-x86_64.egg/reportlab/lib/utils.py target/sphinx-tmp/jython/Lib/site-packages/reportlab/lib/utils.py
+--- /Library/Python/2.5/site-packages/reportlab-2.5-py2.5-macosx-10.7-x86_64.egg/reportlab/lib/utils.py	2012-09-26 14:31:33.000000000 -0500
++++ target/sphinx-tmp/jython/Lib/site-packages/reportlab/lib/utils.py	2012-09-26 15:20:21.000000000 -0500
+@@ -518,7 +518,8 @@
+ 
+ def _isPILImage(im):
+     try:
+-        return isinstance(im,Image.Image)
++        from PIL import Image
++        return isinstance(im, Image)
+     except ImportError:
+         return 0
+ 

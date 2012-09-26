@@ -13,15 +13,17 @@ java -jar jython_installer-2.5.2.jar -s -d jython -t standard
 ./jython/bin/easy_install docutils pygments jinja2 sphinx rst2pdf
 
 # reportlab's default setup doesn work under Jython, so let's install it manually
+# we'll also patch it along the way
 curl -O http://pypi.python.org/packages/source/r/reportlab/reportlab-2.5.tar.gz
 tar zxf reportlab-2.5.tar.gz
+patch -d reportlab*/src/reportlab -p6 < "$BASE_DIR/src/main/build/reportlab.patch"
 pushd reportlab* > /dev/null
 rm -rf src/rl_addons
 ../jython/bin/jython setup.py install
 popd > /dev/null
 
-# we need to patch rst2pdf
-patch -p0 jython/Lib/site-packages/rst2pdf*/rst2pdf/pdfbuilder.py "$BASE_DIR/src/main/build/rst2pdf.patch"
+# we also need to patch rst2pdf
+patch -d jython/Lib/site-packages/rst2pdf* -p6 < "$BASE_DIR/src/main/build/rst2pdf.patch"
 rm jython/Lib/site-packages/rst2pdf*/rst2pdf/pdfbuilder\$py.class
 ./jython/bin/jython -mcompileall jython/Lib/site-packages/rst2pdf*/rst2pdf/
 popd > /dev/null

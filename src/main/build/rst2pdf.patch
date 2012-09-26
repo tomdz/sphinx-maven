@@ -1,5 +1,102 @@
---- /Library/Python/2.7/site-packages/rst2pdf-0.92-py2.7.egg/rst2pdf/pdfbuilder.py	2012-07-08 12:37:09.000000000 -0700
-+++ target/sphinx/rst2pdf/pdfbuilder.py	2012-07-14 22:11:20.000000000 -0700
+diff -dur -x '*.pyc' -x '*.class' -x requires.txt /Library/Python/2.5/site-packages/rst2pdf-0.92-py2.5.egg/rst2pdf/image.py target/sphinx-tmp/jython/Lib/site-packages/rst2pdf-0.92-py2.5.egg/rst2pdf/image.py
+--- /Library/Python/2.5/site-packages/rst2pdf-0.92-py2.5.egg/rst2pdf/image.py	2012-09-26 14:31:14.000000000 -0500
++++ target/sphinx-tmp/jython/Lib/site-packages/rst2pdf-0.92-py2.5.egg/rst2pdf/image.py	2012-09-26 13:55:38.000000000 -0500
+@@ -118,6 +118,23 @@
+ 
+         # Last resort: try everything
+ 
++        if sys.platform[0:4] == 'java':
++            try:
++                from javax.imageio import ImageIO
++                from java.io import File
++
++                iis = ImageIO.createImageInputStream(File(filename))
++                readers = ImageIO.getImageReaders(iis)
++                if readers.hasNext():
++                    reader = readers.next()
++                    reader.setInput(iis, True)
++                    metadata = reader.getImageMetadata(0)
++                    # this means imageio can read it
++                    return filename
++                else:
++                    log.warning("Java's ImageIO cannot read the file [%s]", filename)
++            except Exception, error:
++                log.warning("Could not use Java's ImageIO to read the file [%s]: %s", filename, str(error))
+ 
+         PILImage = LazyImports.PILImage
+ 
+@@ -266,7 +283,8 @@
+                 log.warning("Minimal PDF image support "\
+                     "requires PythonMagick or the vectorpdf extension [%s]", filename)
+                 filename = missing
+-        elif extension != 'jpg' and not LazyImports.PILImage:
++
++        elif extension != 'jpg' and not LazyImports.PILImage and not sys.platform[0:4] == 'java':
+             if LazyImports.PMImage:
+                 # Need to convert to JPG via PythonMagick
+                 filename=self.raster(filename)
+@@ -344,6 +362,58 @@
+ 
+         else:
+             keeptrying = True
++            if sys.platform[0:4] == 'java':
++                try:
++                    from javax.imageio import ImageIO
++                    from java.io import File
++
++                    iis = ImageIO.createImageInputStream(File(imgname))
++                    readers = ImageIO.getImageReaders(iis)
++                    if readers.hasNext():
++                        reader = readers.next()
++                        reader.setInput(iis, True)
++                        metadata = reader.getImageMetadata(0)
++                        iw = reader.getWidth(0)
++                        ih = reader.getHeight(0)
++                        xdpi = None
++                        ydpi = None
++                        if metadata.getNativeMetadataFormatName() == 'javax_imageio_png_1.0':
++                            png_metadata = metadata.getAsTree(metadata.getNativeMetadataFormatName())
++                            if png_metadata is not None:
++                                phys_metadata = png_metadata.getElementsByTagName('pHYs')
++                                if phys_metadata.getLength() == 1:
++                                    xdpi = phys_metadata.item(0).getAttribute('pixelsPerUnitXAxis')
++                                    if xdpi is not None:
++                                        xdpi = float(xdpi)
++                                    ydpi = phys_metadata.item(0).getAttribute('pixelsPerUnitYAxis')
++                                    if ydpi is not None:
++                                        ydpi = float(ydpi)
++                        elif metadata.getNativeMetadataFormatName() == 'javax_imageio_jpeg_image_1.0':
++                            jpg_metadata = metadata.getAsTree(metadata.getNativeMetadataFormatName())
++                            if jpg_metadata is not None:
++                                jfif_metadata = jpg_metadata.getElementsByTagName('app0JFIF')
++                                if jfif_metadata.getLength() == 1:
++                                    resUnits = jfif_metadata.item(0).getAttribute('resUnits')
++                                    # 0 = plain aspect ratio, 1 = dots per inch, 2 = dots per cm
++                                    if resUnits is not None and (resUnits == '1' or resUnits == '2'):
++                                        xdpi = jfif_metadata.item(0).getAttribute('pixelsPerUnitXAxis')
++                                        if xdpi is not None:
++                                            xdpi = float(xdpi)
++                                            if resUnits == '2':
++                                                xdpi = xdpi * 2.54
++                                        ydpi = jfif_metadata.item(0).getAttribute('pixelsPerUnitYAxis')
++                                        if ydpi is not None:
++                                            ydpi = float(ydpi)
++                                            if resUnits == '2':
++                                                ydpi = ydpi * 2.54
++                        if xdpi is None:
++                            xdpi = 300
++                        if ydpi is None:
++                            ydpi = 300
++                        keeptrying = False
++                except Exception, err:
++                    log.error('Error %s', str(err))
++                    pass
+             if LazyImports.PILImage:
+                 try:
+                     img = LazyImports.PILImage.open(imgname)
+diff -dur -x '*.pyc' -x '*.class' -x requires.txt /Library/Python/2.5/site-packages/rst2pdf-0.92-py2.5.egg/rst2pdf/pdfbuilder.py target/sphinx-tmp/jython/Lib/site-packages/rst2pdf-0.92-py2.5.egg/rst2pdf/pdfbuilder.py
+--- /Library/Python/2.5/site-packages/rst2pdf-0.92-py2.5.egg/rst2pdf/pdfbuilder.py	2012-09-26 14:31:14.000000000 -0500
++++ target/sphinx-tmp/jython/Lib/site-packages/rst2pdf-0.92-py2.5.egg/rst2pdf/pdfbuilder.py	2012-09-25 13:16:35.000000000 -0500
 @@ -14,7 +14,11 @@
  """
  
