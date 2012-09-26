@@ -28,7 +28,7 @@ How the update script works
 9. Finally, we create the ``sphinx.jar`` out of the installed modules, and move it to
    ``src/main/resources`` (which will cause it to be included as a file in the plugin).
 
-Steps 1-8 are performed by the `setup_jython_env.sh` script which is executed by
+Steps 1-8 are performed by the `setup-jython-env.sh` script which is executed by
 the `update-sphinx.sh` script.
 
 Fixing bugs in one of the Python libraries
@@ -36,9 +36,9 @@ Fixing bugs in one of the Python libraries
 
 Occasionally there are bugs in one of the python libraries, either plain bugs or bugs when running
 under Jython, that need to be fixed for sphinx-maven to work. In this case, you can use the
-``setup_jython_env.sh`` script to setup an unpacked, editable sphinx jython environment::
+``setup-jython-env.sh`` script to setup an unpacked, editable sphinx jython environment::
 
-    ./src/main/build/setup_jython_env.sh
+    ./src/main/build/setup-jython-env.sh
 
 This script will create a temporary folder ``target/sphinx-tmp`` into which it installs Jython and all
 relevant libraries plus patch them as necessary (as described above).

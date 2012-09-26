@@ -54,6 +54,9 @@ you'll probably need to point it to the index page by adding this to the end::
 
 For additional options see the Sphinx section of the `rst2pdf manual`_.
 
+Please note that alpha channels in the images (i.e. PNGs) are not supported, and will be replaced with
+black pixels. This is most likely not what you want, so please don't use alpha channels in the images.
+
 A note on memory usage
 ======================
 

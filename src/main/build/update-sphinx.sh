@@ -3,7 +3,7 @@ SCRIPT_DIR=$(cd $(dirname ${BASH_SOURCE[0]:-$0}); pwd)
 BASE_DIR=$(cd "$SCRIPT_DIR/../../.."; pwd)
 WORK_DIR="target/sphinx-tmp"
 
-/bin/bash "$SCRIPT_DIR/setup_jython_env.sh"
+/bin/bash "$SCRIPT_DIR/setup-jython-env.sh"
 
 pushd "$BASE_DIR" > /dev/null
 cd $WORK_DIR
