@@ -8,12 +8,10 @@ documentation out of [reStructured Text](http://docutils.sf.net/rst.html) source
 
 1.  Create a folder `src/site/sphinx` (this can be changed via options should you want a different folder).
 2.  Generate documentation in it. Basically what you need is
-
     * A configuration file called [conf.py](http://sphinx.pocoo.org/config.html) that defines the theme and other options (such as which output formats etc.)
     * The documentation files in reStructured Text format
     * Additional files such as static files (images etc.), usually in a `_static` sub directory
     * Optionally, a customized theme in a sub directory called `_theme`
-
     For good examples of documentation, see [Sphinx' examples page](http://sphinx.pocoo.org/examples.html). Personally, I like
     [Werkzeug](http://werkzeug.pocoo.org/docs/) (documentation source is on [github](https://github.com/mitsuhiko/werkzeug/tree/master/docs)) and
     [Celery](http://docs.celeryproject.org/en/latest/index.html) (documentation is also on [github](https://github.com/ask/celery/tree/master/docs)).
