@@ -359,11 +359,15 @@ public class SphinxMojo extends AbstractMavenReport
 
         String[] args = getSphinxRunnerCmdLine();
 
+        int result;
         try {
-            SphinxRunner.main(args);
+            result = SphinxRunner.run(args);
         }
         catch (Exception ex) {
             throw new MavenReportException("Could not generate documentation", ex);
+        }
+        if (result != 0) {
+            throw new MavenReportException("Sphinx report generation failed");
         }
     }
 
