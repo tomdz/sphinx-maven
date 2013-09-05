@@ -19,6 +19,9 @@ public class SphinxRunner
      */
     public static void main(String[] args) throws ScriptException
     {
+        // use headless mode for AWT (prevent "Launcher" app on Mac OS X)
+        System.setProperty("java.awt.headless", "true");
+
         System.exit(run(args));
     }
 
