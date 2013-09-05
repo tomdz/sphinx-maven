@@ -19,6 +19,11 @@ public class SphinxRunner
      */
     public static void main(String[] args) throws ScriptException
     {
+        System.exit(run(args));
+    }
+
+    public static int run(String[] args) throws ScriptException
+    {
         // this setting supposedly allows GCing of jython-generated classes but I'm
         // not sure if this setting has any effect on newer jython versions anymore
         System.setProperty("python.options.internalTablesImpl", "weak");
@@ -47,6 +52,7 @@ public class SphinxRunner
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("python");
 
         engine.put("args", sphinxArgs.toArray(new String[sphinxArgs.size()]));
-        engine.eval("import sphinx; sphinx.main(args)");
+        engine.eval("import sphinx");
+        return (Integer) engine.eval("sphinx.main(args)");
     }
 }
