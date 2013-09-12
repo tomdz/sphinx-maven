@@ -10,7 +10,7 @@ curl -LO "http://downloads.sourceforge.net/project/jython/jython/2.5.2/jython_in
 curl -O "http://peak.telecommunity.com/dist/ez_setup.py"
 java -jar jython_installer-2.5.2.jar -s -d jython -t standard
 ./jython/bin/jython ez_setup.py
-./jython/bin/easy_install docutils pygments jinja2 sphinx rst2pdf
+./jython/bin/easy_install docutils pygments jinja2 sphinx sphinxcontrib-httpdomain javasphinx rst2pdf
 
 # reportlab's default setup doesn work under Jython, so let's install it manually
 # we'll also patch it along the way
