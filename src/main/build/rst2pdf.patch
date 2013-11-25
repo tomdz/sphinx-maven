@@ -94,29 +94,3 @@ diff -dur -x '*.pyc' -x '*.class' -x requires.txt /Library/Python/2.5/site-packa
              if LazyImports.PILImage:
                  try:
                      img = LazyImports.PILImage.open(imgname)
-diff -dur -x '*.pyc' -x '*.class' -x requires.txt /Library/Python/2.5/site-packages/rst2pdf-0.92-py2.5.egg/rst2pdf/pdfbuilder.py target/sphinx-tmp/jython/Lib/site-packages/rst2pdf-0.92-py2.5.egg/rst2pdf/pdfbuilder.py
---- /Library/Python/2.5/site-packages/rst2pdf-0.92-py2.5.egg/rst2pdf/pdfbuilder.py	2012-09-26 14:31:14.000000000 -0500
-+++ target/sphinx-tmp/jython/Lib/site-packages/rst2pdf-0.92-py2.5.egg/rst2pdf/pdfbuilder.py	2012-09-25 13:16:35.000000000 -0500
-@@ -14,7 +14,11 @@
- """
- 
- import logging
--import parser
-+try:
-+    import parser
-+except ImportError:
-+    # parser is not available on Jython
-+    parser = None
- import re
- import sys
- import os
-@@ -814,6 +818,9 @@
-         # just replace all non-ASCII characters.
-         src = src.encode('ascii', 'replace')
- 
-+    if parser is None:
-+        return True
-+
-     try:
-         parser.suite(src)
-     except SyntaxError, UnicodeEncodeError:

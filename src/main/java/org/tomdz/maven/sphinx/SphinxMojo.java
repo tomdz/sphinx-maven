@@ -283,36 +283,40 @@ public class SphinxMojo extends AbstractMavenReport
         }
     }
 
-    private void unpackSphinx() throws MavenReportException
+    private void unpackSphinx() throws MavenReportException 
     {
-        if (!sphinxSourceDirectory.exists() && !sphinxSourceDirectory.mkdirs()) {
-            throw new MavenReportException("Could not generate the temporary directory " + sphinxSourceDirectory.getAbsolutePath() + " for the sphinx sources"); 
-        }
-
-        if (verbose) {
-            getLog().info("Unpacking sphinx to " + sphinxSourceDirectory.getAbsolutePath());
-        }
-        try {
-            ArchiveInputStream input = new ArchiveStreamFactory().createArchiveInputStream("jar", SphinxMojo.class.getResourceAsStream("/sphinx.jar"));
-            ArchiveEntry entry = input.getNextEntry();
-    
-            while (entry != null) {
-                File archiveEntry = new File(sphinxSourceDirectory, entry.getName());
-                archiveEntry.getParentFile().mkdirs();
-                if (entry.isDirectory()) {
-                    archiveEntry.mkdir();
-                    entry = input.getNextEntry();
-                    continue;
-                }
-                OutputStream out = new FileOutputStream(archiveEntry);
-                IOUtils.copy(input, out);
-                out.close();
-                entry = input.getNextEntry();
+        if (!sphinxSourceDirectory.exists()) {
+            if (!sphinxSourceDirectory.mkdirs()) {
+                throw new MavenReportException("Could not generate the temporary directory " + sphinxSourceDirectory.getAbsolutePath() + " for the sphinx sources");
             }
-            input.close();
-        }
-        catch (Exception ex) {
-            throw new MavenReportException("Could not unpack the sphinx source", ex);
+
+            if (verbose) {
+                getLog().info("Unpacking sphinx to " + sphinxSourceDirectory.getAbsolutePath());
+            }
+            try {
+                ArchiveInputStream input = new ArchiveStreamFactory().createArchiveInputStream("jar", SphinxMojo.class.getResourceAsStream("/sphinx.jar"));
+                ArchiveEntry entry = input.getNextEntry();
+		
+                while (entry != null) {
+                    File archiveEntry = new File(sphinxSourceDirectory, entry.getName());
+                    archiveEntry.getParentFile().mkdirs();
+                    if (entry.isDirectory()) {
+                        archiveEntry.mkdir();
+                        entry = input.getNextEntry();
+                        continue;
+                    }
+                    OutputStream out = new FileOutputStream(archiveEntry);
+                    IOUtils.copy(input, out);
+                    out.close();
+                    entry = input.getNextEntry();
+                }
+                input.close();
+            } 
+            catch (Exception ex) {
+                throw new MavenReportException("Could not unpack the sphinx source", ex);
+            }
+        } else {
+            getLog().info("Using an already unpacked Sphinx [" + sphinxSourceDirectory.getAbsolutePath() + "].");
         }
     }
 
