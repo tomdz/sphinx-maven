@@ -1,8 +1,18 @@
-diff -dur -x '*.pyc' -x '*.class' -x hyphen.mashed /Library/Python/2.5/site-packages/reportlab-2.5-py2.5-macosx-10.7-x86_64.egg/reportlab/lib/utils.py target/sphinx-tmp/jython/Lib/site-packages/reportlab/lib/utils.py
---- /Library/Python/2.5/site-packages/reportlab-2.5-py2.5-macosx-10.7-x86_64.egg/reportlab/lib/utils.py	2012-09-26 14:31:33.000000000 -0500
-+++ target/sphinx-tmp/jython/Lib/site-packages/reportlab/lib/utils.py	2012-09-26 15:20:21.000000000 -0500
+--- target/sphinx-tmp/reportlab-2.5/src/reportlab/lib/utils.py  2010-09-08 15:23:56.000000000 +0200
++++ target/sphinx-tmp/jython/Lib/site-packages/reportlab/lib/utils.py   2013-11-22 23:15:31.516445100 +0100
+@@ -327,8 +327,8 @@
+ # module, as there are 2 ways to import it
+ if sys.platform[0:4] == 'java':
+     try:
+-        import javax.imageio
+-        import java.awt.image
++        from javax.imageio import ImageIO
++        from java.awt.image import *
+         haveImages = 1
+     except:
+         haveImages = 0
 @@ -518,7 +518,8 @@
- 
+
  def _isPILImage(im):
      try:
 -        return isinstance(im,Image.Image)
@@ -10,4 +20,4 @@ diff -dur -x '*.pyc' -x '*.class' -x hyphen.mashed /Library/Python/2.5/site-pack
 +        return isinstance(im, Image)
      except ImportError:
          return 0
- 
+

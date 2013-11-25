@@ -14,5 +14,7 @@ jar uf sphinx.jar -C jython/Lib/site-packages/Pygments*/ pygments
 jar uf sphinx.jar -C jython/Lib/site-packages/simplejson*/ simplejson
 jar uf sphinx.jar -C jython/Lib/site-packages/rst2pdf*/ rst2pdf
 jar uf sphinx.jar -C jython/Lib/site-packages/ reportlab
+jar uf sphinx.jar -C jython/Lib/site-packages/rst2pdf*/ rst2pdf
+jar uf sphinx.jar -C jython/Lib/site-packages/pdfrw*/ pdfrw
 mv sphinx.jar "$BASE_DIR/src/main/resources/"
 popd > /dev/null
