@@ -20,7 +20,7 @@ curl -O "https://bitbucket.org/pypa/setuptools/raw/bootstrap-py24/ez_setup.py"
 
 # Install Sphinx and other packages 
 ./jython/bin/easy_install --no-deps docutils==0.11 pygments==1.6 jinja2==2.6 sphinx==1.2.2 simplejson==2.6.2 rst2pdf==0.93
-./jython/bin/easy_install --no-deps javasphinx==0.9.10 javalang==0.9.5 beautifulsoup4==4.0.1 sphinxcontrib-httpdomain==1.2.1
+./jython/bin/easy_install --no-deps javasphinx==0.9.10 javalang==0.9.5 beautifulsoup==3.2.1 sphinxcontrib-httpdomain==1.2.1
  
 # reportlab's default setup does not work under Jython, so let's install it manually
 # we'll also patch it along the way
@@ -36,5 +36,15 @@ popd > /dev/null
 patch -d jython/Lib/site-packages/rst2pdf* -p6 < "$BASE_DIR/src/main/build/rst2pdf.patch"
 rm jython/Lib/site-packages/rst2pdf*/rst2pdf/pdfbuilder\$py.class
 ./jython/bin/jython -mcompileall jython/Lib/site-packages/rst2pdf*/rst2pdf/
+
+# patch javasphinx
+patch -d jython/Lib/site-packages/javasphinx* -p1 < "$BASE_DIR/src/main/build/javasphinx.patch"
+
+# patch Sphinx
+patch -d jython/Lib/site-packages/Sphinx* -p1 < "$BASE_DIR/src/main/build/sphinx.patch"
+
+# patch sphinxcontrib
+patch -d jython/Lib/site-packages/sphinxcontrib* -p1 < "$BASE_DIR/src/main/build/sphinxcontrib.patch"
+
 popd > /dev/null
 

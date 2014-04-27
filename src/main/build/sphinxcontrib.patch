@@ -1,0 +1,14 @@
+diff -dur -x '*.pyc' -x '*.class' -x '*.*~' sphinx.commit/sphinxcontrib/__init__.py sphinx.patched/sphinxcontrib/__init__.py
+--- sphinx.commit/sphinxcontrib/__init__.py	2014-04-17 22:15:40.000000000 +0200
++++ sphinx.patched/sphinxcontrib/__init__.py	2014-04-18 09:48:24.480994048 +0200
+@@ -9,6 +9,8 @@
+     :copyright: Copyright 2007-2009 by the Sphinx team, see AUTHORS.
+     :license: BSD, see LICENSE for details.
+ """
+-
+-__import__('pkg_resources').declare_namespace(__name__)
++try:
++    __import__('pkg_resources').declare_namespace(__name__)
++except:
++    pass
+ 
