@@ -285,6 +285,9 @@ public class SphinxMojo extends AbstractMavenReport
 
     private void unpackSphinx() throws MavenReportException
     {
+        if (sphinxSourceDirectory.exists()) {
+            return;
+        }
         if (!sphinxSourceDirectory.exists() && !sphinxSourceDirectory.mkdirs()) {
             throw new MavenReportException("Could not generate the temporary directory " + sphinxSourceDirectory.getAbsolutePath() + " for the sphinx sources"); 
         }

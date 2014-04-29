@@ -6,7 +6,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import org.apache.commons.compress.archivers.ArchiveEntry;
@@ -20,32 +19,37 @@ import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
 import org.apache.maven.artifact.resolver.ArtifactResolutionException;
 import org.apache.maven.artifact.resolver.ArtifactResolutionResult;
-import org.apache.maven.doxia.siterenderer.Renderer;
+import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.descriptor.PluginDescriptor;
-import org.apache.maven.project.MavenProject;
-import org.apache.maven.reporting.AbstractMavenReport;
-import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
 import org.codehaus.plexus.util.cli.StreamConsumer;
 
 /**
+ * This Mojo gives access to the javasphinx-apidoc command to analyze Java source code
+ * and generates Javadoc at the Sphinx format.
+ * 
+ * <p>The next paragraphs are <i>samples</i> to <b>demonstrate</b> how javasphinx-apidoc analyzes comments.
+ * 
+ * Note that closing tag are not mandatory.
+ * 
+ * <table><tr ><td rowspan="1">Cell1</td><td>Cell2</td>
+ * <tr ><td>Cell3<td>Cell4</td></table>
+ * 
+ * Some links in a list:
+ * 
+ * <ul>
+ * <li><a href="#generate-apidoc">Goal</a>
+ * <li><a href="http://bronto.github.io/javasphinx/">Javasphinx documentation</a>
+ * </ul>
+ * 
  * @author tomdz & heurtier
  * @goal generate-apidoc
  * @phase pre-site
  */
-public class JavaSphinxMojo extends AbstractMavenReport
+public class JavaSphinxMojo extends AbstractMojo
 {
-    /**
-     * The maven project object.
-     *
-     * @parameter default-value="${project}"
-     * @required
-     * @readonly
-     */
-    private MavenProject project;
-
     /**
      * The plugin's descriptor.
      *
@@ -106,7 +110,7 @@ public class JavaSphinxMojo extends AbstractMavenReport
     /**
      * The directory containing the sphinx doc source.
      *
-     * @parameter expression="${basedir}/src/site/sphinx"
+     * @parameter expression="${basedir}/src/main/java"
      * @required
      */
     private File sourceDirectory;
@@ -114,34 +118,19 @@ public class JavaSphinxMojo extends AbstractMavenReport
     /**
      * Directory where reports will go.
      *
-     * @parameter expression="${project.reporting.outputDirectory}"
+     * @parameter expression="${project.build.directory}/src/site/sphinx"
      * @required
      */
     private File outputDirectory;
     
     /**
-     * Name of the report.
+     * The directory for sphinx' source.
      *
-     * @parameter expression="Documentation via sphinx"
+     * @parameter expression="${project.build.directory}/sphinx"
      * @required
+     * @readonly
      */
-    private String name;
-    
-    /**
-     * Description of the report.
-     *
-     * @parameter expression="Documentation via sphinx"
-     * @required
-     */
-    private String description;
-    
-    /**
-     * The base name used to create report's output file(s).
-     *
-     * @parameter expression="index"
-     * @required
-     */
-    private String outputName;
+    private File sphinxSourceDirectory;
 
     /**
      * Whether Sphinx should generate verbose output.
@@ -160,25 +149,30 @@ public class JavaSphinxMojo extends AbstractMavenReport
     /**
      * Whether generation is in update mode
      *
-     * @parameter alias="update" default-value="false"
+     * @parameter alias="update" default-value="true"
      */
     private boolean update;
 
     /**
-     * The directory for sphinx' source.
-     *
-     * @parameter expression="${project.build.directory}/sphinx"
-     * @required
-     * @readonly
+     * Don't create a table of contents file
+     * 
+     * @parameter alias="no_toc" default-value="false"
      */
-    private File sphinxSourceDirectory;
-
+    private boolean no_toc;
+    
     /**
-     * Whether it should be run in a forked jvm instance.
-     *
-     * @parameter alias="fork" default-value="false"
+     *  file suffix (default: rst)
+     *  
+     *  @parameter alias="suffix" default-value="rst"
      */
-    private boolean fork;
+    private String suffix;
+    
+    /**
+     * Additional input paths to scan.
+     *
+     * @parameter
+     */
+    private List<String> includes;
 
     /**
      * Option to specify the jvm (or path to the java executable) to use with the forking options. For the default, the
@@ -197,6 +191,13 @@ public class JavaSphinxMojo extends AbstractMavenReport
     private String argLine;
 
     /**
+     * Whether it should be run in a forked jvm instance.
+     *
+     * @parameter alias="fork" default-value="false"
+     */
+    private boolean fork;
+
+    /**
      * Kill the forked sphinx process after a certain number of seconds. If set to 0, wait forever for the process, never
      * timing out.
      *
@@ -205,60 +206,7 @@ public class JavaSphinxMojo extends AbstractMavenReport
     private int forkTimeoutSec;
 
     @Override
-    public String getDescription(Locale defaultLocale)
-    {
-        return description;
-    }
-
-    @Override
-    public String getName(Locale defaultLocale)
-    {
-        return name;
-    }
-
-    @Override
-    public String getOutputName()
-    {
-        return outputName;
-    }
-
-    @Override
-    public boolean isExternalReport()
-    {
-        return true;
-    }
-
-    @Override
-    protected Renderer getSiteRenderer()
-    {
-        return null;
-    }
-
-    @Override
-    protected String getOutputDirectory()
-    {
-        return outputDirectory.getAbsolutePath();
-    }
-
-    @Override
-    protected MavenProject getProject()
-    {
-        return project;
-    }
-
-    @Override
     public void execute() throws MojoExecutionException
-    {
-        try {
-            executeReport(Locale.getDefault());
-        }
-        catch (MavenReportException ex) {
-            throw new MojoExecutionException("Failed to run the report", ex);
-        }
-    }
-
-    @Override
-    protected void executeReport(Locale locale) throws MavenReportException
     {
         unpackSphinx();
         if (fork) {
@@ -269,10 +217,13 @@ public class JavaSphinxMojo extends AbstractMavenReport
         }
     }
 
-    private void unpackSphinx() throws MavenReportException
+    private void unpackSphinx() throws MojoExecutionException
     {
+        if (sphinxSourceDirectory.exists()) {
+            return;
+        }
         if (!sphinxSourceDirectory.exists() && !sphinxSourceDirectory.mkdirs()) {
-            throw new MavenReportException("Could not generate the temporary directory " + sphinxSourceDirectory.getAbsolutePath() + " for the sphinx sources"); 
+            throw new MojoExecutionException("Could not generate the temporary directory " + sphinxSourceDirectory.getAbsolutePath() + " for the sphinx sources"); 
         }
 
         if (verbose) {
@@ -298,7 +249,7 @@ public class JavaSphinxMojo extends AbstractMavenReport
             input.close();
         }
         catch (Exception ex) {
-            throw new MavenReportException("Could not unpack the sphinx source", ex);
+            throw new MojoExecutionException("Could not unpack the sphinx source", ex);
         }
     }
 
@@ -317,33 +268,46 @@ public class JavaSphinxMojo extends AbstractMavenReport
         if (update) {
             args.add("-u");
         }
+        if (no_toc) {
+            args.add("-T");
+        }
+        if (suffix!=null && !suffix.isEmpty()) {
+            args.add("-s");
+            args.add(suffix);
+        }
+        if (includes!=null && includes.size()>0) {
+            for(String s:includes) {
+                args.add("-I");
+                args.add(s);
+            }
+        }
+        
         args.add("-o");
         args.add(outputDirectory.getAbsolutePath());
         args.add(sourceDirectory.getAbsolutePath());
         return args.toArray(new String[args.size()]);
     }
 
-    private void runSphinx() throws MavenReportException
+    private void runSphinx() throws MojoExecutionException
     {
         if (verbose) {
             getLog().info("Running javasphinx-apidoc on " + sourceDirectory.getAbsolutePath() + ", output will be placed in " + outputDirectory.getAbsolutePath());
         }
 
         String[] args = getSphinxRunnerCmdLine();
-
         int result;
         try {
             result = JavaSphinxRunner.run(args);
         }
         catch (Exception ex) {
-            throw new MavenReportException("Could not generate documentation", ex);
+            throw new MojoExecutionException("Could not generate documentation", ex);
         }
         if (result != 0) {
-            throw new MavenReportException("Javasphinx-apidoc generation failed");
+            throw new MojoExecutionException("Javasphinx-apidoc generation failed");
         }
     }
 
-    private void runForkedSphinx() throws MavenReportException
+    private void runForkedSphinx() throws MojoExecutionException
     {
         String jvmBinary = jvm;
 
@@ -363,7 +327,7 @@ public class JavaSphinxMojo extends AbstractMavenReport
             cmdLine.addEnvironment("CLASSPATH", getPluginClasspath());
         }
         catch (Exception ex) {
-            throw new MavenReportException("Could not determine the classpath of the plugin", ex);
+            throw new MojoExecutionException("Could not determine the classpath of the plugin", ex);
         }
 
         String className = JavaSphinxRunner.class.getName();
@@ -404,10 +368,10 @@ public class JavaSphinxMojo extends AbstractMavenReport
         }
         catch (Exception ex)
         {
-            throw new MavenReportException("Could not execute sphinx in a forked jvm", ex);
+            throw new MojoExecutionException("Could not execute sphinx in a forked jvm", ex);
         }
         if (result != 0) {
-            throw new MavenReportException("Sphinx report generation failed");
+            throw new MojoExecutionException("Sphinx report generation failed");
         }
     }
 

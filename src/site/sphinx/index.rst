@@ -20,5 +20,8 @@ The *sphinx-maven* plugin is BSD licensed just as Sphinx itself is.
    basic-usage
    configuration
    development
+   httpdomain
+   javasphinx
    faq
-   javadoc </apidocs/index.html>
+   javadoc <apidocs/index.html>
+   javadoc (generated) <packages>

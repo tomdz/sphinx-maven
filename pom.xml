@@ -273,6 +273,9 @@
             <reports><report>generate</report></reports>
           </reportSet>
         </reportSets>
+        <configuration>
+            <sourceDirectory>${project.build.directory}/src/site/sphinx</sourceDirectory>
+        </configuration>
       </plugin>
     </plugins>
   </reporting>
@@ -288,7 +291,58 @@
       </activation>
       <build>
         <plugins>
-          <plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>pre-site</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/src/site/sphinx</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/site/sphinx</directory>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+							<includeEmptyDirs>true</includeEmptyDirs>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.tomdz.maven</groupId>
+				<artifactId>sphinx-maven-plugin</artifactId>
+				<version>${project.version}</version>
+				<executions>
+					<execution>
+					    <id>javasphinx-apidoc</id>
+					    <phase>pre-site</phase>
+						<goals>
+							<goal>generate-apidoc</goal>
+						</goals>
+				        <configuration>
+					        <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+					        <outputDirectory>${project.build.directory}/src/site/sphinx</outputDirectory>
+				        </configuration>
+					</execution>
+					<execution>
+					    <id>generate</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					    <phase>pre-site</phase>
+				        <configuration>
+					        <sourceDirectory>${project.build.directory}/src/site/sphinx</sourceDirectory>
+				        </configuration>
+					</execution>
+				</executions>
+			</plugin>
+            <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-site-plugin</artifactId>
             <version>3.0</version>
@@ -331,11 +385,6 @@
                     <stylesheetfile>src/site/javadoc/stylesheet.css</stylesheetfile>
                   </configuration>
                 </plugin>
-                <plugin>
-                  <groupId>org.tomdz.maven</groupId>
-                  <artifactId>sphinx-maven-plugin</artifactId>
-                  <version>${project.version}</version>
-                </plugin>
               </reportPlugins>
             </configuration>
           </plugin>
@@ -359,6 +408,7 @@
                 </goals>
                 <configuration>
                   <builder>html</builder>
+                  <sourceDirectory>${project.build.directory}/src/site/sphinx</sourceDirectory>
                   <outputDirectory>${project.build.directory}/docs</outputDirectory>
                 </configuration>
               </execution>
@@ -370,6 +420,7 @@
                 </goals>
                 <configuration>
                   <builder>pdf</builder>
+                  <sourceDirectory>${project.build.directory}/src/site/sphinx</sourceDirectory>
                   <outputDirectory>${project.build.directory}/docs-pdf</outputDirectory>
                 </configuration>
               </execution>

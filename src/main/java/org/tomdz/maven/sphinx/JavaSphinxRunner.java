@@ -54,7 +54,7 @@ public class JavaSphinxRunner
 
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("python");
 
-        engine.put("args", Py.java2py(sphinxArgs)); //.toArray(new String[sphinxArgs.size()]));
+        engine.put("args", Py.java2py(sphinxArgs));
         engine.eval("import javasphinx.apidoc");
         return (Integer) engine.eval("javasphinx.apidoc.main(args)");
     }
