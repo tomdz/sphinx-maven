@@ -19,7 +19,7 @@ curl -O "https://bitbucket.org/pypa/setuptools/raw/bootstrap-py24/ez_setup.py"
 ./jython/bin/jython ez_setup.py
 
 # Install Sphinx and other packages 
-./jython/bin/easy_install --no-deps docutils==0.11 pygments==1.6 jinja2==2.6 sphinx==1.2.2 simplejson==2.6.2 rst2pdf==0.93
+./jython/bin/easy_install --no-deps docutils==0.11 pygments==1.6 jinja2==2.6 sphinx==1.2.2 simplejson==2.6.2 rst2pdf==0.93 pdfrw==0.1
 ./jython/bin/easy_install --no-deps javasphinx==0.9.10 javalang==0.9.5 beautifulsoup==3.2.1 sphinxcontrib-httpdomain==1.2.1
  
 # reportlab's default setup does not work under Jython, so let's install it manually

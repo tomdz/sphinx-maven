@@ -72,7 +72,69 @@ diff -dur -x '*.pyc' -x '*.class' -x '*.*~' sphinx.commit/javasphinx/htmlrst.py 
  
  Cell = collections.namedtuple('Cell', ['type', 'rowspan', 'colspan', 'contents'])
  
-@@ -389,8 +389,11 @@
+@@ -108,7 +108,7 @@
+ 
+         rows = []
+ 
+-        for i, tr in enumerate(table.find_all('tr')):
++        for i, tr in enumerate(table.findAll('tr')):
+             row = []
+ 
+             for c in tr.contents:
+@@ -117,8 +117,14 @@
+                 if cell_type not in ('td', 'th'):
+                     continue
+ 
+-                rowspan = int(c.attrs.get('rowspan', 1))
+-                colspan = int(c.attrs.get('colspan', 1))
++                def taggetattr(tag,name,default):
++                    for i in tag.attrs:
++                        if i[0]==name:
++                            return i[1]
++                    return default
++                    
++                rowspan = int(taggetattr(c,'rowspan', 1))
++                colspan = int(taggetattr(c,'colspan', 1))
+                 contents = self._process_children(c).strip()
+ 
+                 if cell_type == 'th' and i > 0:
+@@ -216,7 +222,7 @@
+         return ''.join(parts)
+ 
+     def _process_text(self, node):
+-        return ''.join(node.strings)
++        return ''.join(node.text)
+ 
+     def _process(self, node):
+         if isinstance(node, basestring):
+@@ -250,9 +256,10 @@
+             return self._directive('parsed-literal', self._process_text(node))
+ 
+         if node.name == 'a':
+-            if 'name' in node.attrs:
++            attrs_name,attrs_value = zip(*node.attrs)
++            if 'name' in attrs_name:
+                 return self._separate('.. _' + node['name'] + ':')
+-            elif 'href' in node.attrs:
++            elif 'href' in attrs_name:
+                 target = node['href']
+                 label = self._compress_whitespace(self._process_text(node).strip('\n'))
+ 
+@@ -264,11 +271,11 @@
+                     return self._hyperlink(target, label)
+ 
+         if node.name == 'ul':
+-            items = [self._process(n) for n in node.find_all('li', recursive=False)]
++            items = [self._process(n) for n in node.findAll('li', recursive=False)]
+             return self._listing('*', items)
+ 
+         if node.name == 'ol':
+-            items = [self._process(n) for n in node.find_all('li', recursive=False)]
++            items = [self._process(n) for n in node.findAll('li', recursive=False)]
+             return self._listing('#.', items)
+ 
+         if node.name == 'li':
+@@ -389,8 +396,11 @@
          if not s_html.strip():
              return ''
  
@@ -86,4 +148,3 @@ diff -dur -x '*.pyc' -x '*.class' -x '*.*~' sphinx.commit/javasphinx/htmlrst.py 
  
          result = self._process_children(top)
  
-

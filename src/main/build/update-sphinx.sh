@@ -13,6 +13,7 @@ jar uf sphinx.jar -C jython/Lib/site-packages/docutils*/ docutils
 jar uf sphinx.jar -C jython/Lib/site-packages/Pygments*/ pygments
 jar uf sphinx.jar -C jython/Lib/site-packages/simplejson*/ simplejson
 jar uf sphinx.jar -C jython/Lib/site-packages/rst2pdf*/ rst2pdf
+jar uf sphinx.jar -C jython/Lib/site-packages/pdfrw*/ pdfrw
 jar uf sphinx.jar -C jython/Lib/site-packages/ reportlab
 jar uf sphinx.jar -C jython/Lib/site-packages/sphinxcontrib_h*/ sphinxcontrib
 jar uf sphinx.jar -C jython/Lib/site-packages/javasphinx*/ javasphinx
