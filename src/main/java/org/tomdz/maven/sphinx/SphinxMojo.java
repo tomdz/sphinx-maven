@@ -19,9 +19,14 @@ import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
 import org.apache.maven.artifact.resolver.ArtifactResolutionException;
 import org.apache.maven.artifact.resolver.ArtifactResolutionResult;
+import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.doxia.siterenderer.Renderer;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.descriptor.PluginDescriptor;
+import org.apache.maven.plugins.annotations.Component;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReportException;
@@ -31,191 +36,150 @@ import org.codehaus.plexus.util.cli.StreamConsumer;
 
 /**
  * @author tomdz
- * @goal generate
- * @phase site
  */
+@Mojo(name = "generate", defaultPhase = LifecyclePhase.SITE)
 public class SphinxMojo extends AbstractMavenReport
 {
     /**
      * The maven project object.
-     *
-     * @parameter default-value="${project}"
-     * @required
-     * @readonly
      */
+    @Parameter(defaultValue = "${project}", required = true, readonly = true)
     private MavenProject project;
 
     /**
      * The plugin's descriptor.
-     *
-     * @parameter default-value="${plugin}"
-     * @required
-     * @readonly
      */
+    @Parameter(defaultValue = "${plugin}", required = true, readonly = true)
     private PluginDescriptor pluginDesc;
 
     /**
      * The artifact factory.
-     *
-     * @component
      */
+    @Component
     private ArtifactFactory artifactFactory;
 
     /**
      * Needed to resolve dependencies.
-     *
-     * @component
      */
-    private org.apache.maven.artifact.resolver.ArtifactResolver resolver;
+    @Component
+    private ArtifactResolver resolver;
 
     /**
      * Needed to resolve dependencies.
-     *
-     * @component
      */
+    @Component
     private ArtifactMetadataSource artifactMetadataSource;
 
     /**
      * The local repo for the project if defined;
-     *
-     * @parameter expression="${localRepository}"
-     * @required
-     * @readonly
      */
+    @Parameter(defaultValue = "${localRepository}", required = true, readonly = true)
     private ArtifactRepository localRepository;
 
     /**
      * Remote repositories.
-     *
-     * @parameter expression="${project.remoteArtifactRepositories}"
-     * @required
-     * @readonly
      */
+    @Parameter(defaultValue = "${project.remoteArtifactRepositories}", required = true, readonly = true)
     private List remoteRepositories;
 
     /**
      * The base directory of the project.
-     *
-     * @parameter default-value="${basedir}"
-     * @required
-     * @readonly
      */
+    @Parameter(defaultValue = "${basedir}", required = true, readonly = true)
     private File basedir;
 
     /**
      * The directory containing the sphinx doc source.
-     *
-     * @parameter expression="${basedir}/src/site/sphinx"
-     * @required
      */
+    @Parameter(defaultValue = "${basedir}/src/site/sphinx", required = true)
     private File sourceDirectory;
 
     /**
      * Directory where reports will go.
-     *
-     * @parameter expression="${project.reporting.outputDirectory}"
-     * @required
      */
+    @Parameter(defaultValue = "${project.reporting.outputDirectory}", required = true)
     private File outputDirectory;
-    
+
     /**
      * Name of the report.
-     *
-     * @parameter expression="Documentation via sphinx"
-     * @required
      */
+    @Parameter(defaultValue = "Documentation via sphinx", required = true)
     private String name;
-    
+
     /**
      * Description of the report.
-     *
-     * @parameter expression="Documentation via sphinx"
-     * @required
      */
+    @Parameter(defaultValue = "Documentation via sphinx", required = true)
     private String description;
-    
+
     /**
      * The base name used to create report's output file(s).
-     *
-     * @parameter expression="index"
-     * @required
      */
+    @Parameter(defaultValue = "index", required = true)
     private String outputName;
 
     /**
      * The directory for sphinx' source.
-     *
-     * @parameter expression="${project.build.directory}/sphinx"
-     * @required
-     * @readonly
      */
+    @Parameter(defaultValue = "${project.build.directory}/sphinx", required = true, readonly = true)
     private File sphinxSourceDirectory;
 
     /**
      * The builder to use. See <a href="http://sphinx.pocoo.org/man/sphinx-build.html?highlight=command%20line">sphinx-build</a>
      * for a list of supported builders.
-     *
-     * @parameter alias="builder" default-value="html"
      */
+    @Parameter(alias = "builder", defaultValue = "html")
     private String builder;
 
     /**
      * The <a href="http://sphinx.pocoo.org/markup/misc.html#tags">tags</a> to pass to the sphinx build.
-     *
-     * @parameter alias="tags"
      */
+    @Parameter(alias = "tags")
     private List<String> tags;
 
     /**
      * Whether Sphinx should generate verbose output.
-     *
-     * @parameter alias="verbose" default-value="true"
      */
+    @Parameter(alias = "verbose", defaultValue = "true")
     private boolean verbose;
 
     /**
      * Whether Sphinx should treat warnings as errors.
-     *
-     * @parameter alias="warningsAsErrors" default-value="false"
      */
+    @Parameter(alias = "warningsAsErrors", defaultValue = "false")
     private boolean warningsAsErrors;
 
     /**
      * Whether Sphinx should generate output for all files instead of only the changed ones.
-     *
-     * @parameter alias="force" default-value="false"
      */
+    @Parameter(alias = "force", defaultValue = "false")
     private boolean force;
 
     /**
      * Whether sphinx should be run in a forked jvm instance.
-     *
-     * @parameter alias="fork" default-value="false"
      */
+    @Parameter(alias = "fork", defaultValue = "false")
     private boolean fork;
 
     /**
      * Option to specify the jvm (or path to the java executable) to use with the forking options. For the default, the
      * jvm will be a new instance of the same VM as the one used to run Maven. JVM settings are not inherited from
      * MAVEN_OPTS.
-     *
-     * @parameter alias="jvm"
      */
+    @Parameter(alias = "jvm")
     private String jvm;
 
     /**
      * Arbitrary JVM options for the forked sphinx process to set on the command line.
-     *
-     * @parameter alias="argLine"
      */
+    @Parameter(alias="argLine")
     private String argLine;
 
     /**
      * Kill the forked sphinx process after a certain number of seconds. If set to 0, wait forever for the process, never
      * timing out.
-     *
-     * @parameter alias="forkTimeoutSec"
      */
+    @Parameter(alias="forkTimeoutSec")
     private int forkTimeoutSec;
 
     @Override
