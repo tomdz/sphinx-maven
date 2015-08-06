@@ -286,7 +286,7 @@ public class SphinxMojo extends AbstractMavenReport
     private void unpackSphinx() throws MavenReportException
     {
         if (!sphinxSourceDirectory.exists() && !sphinxSourceDirectory.mkdirs()) {
-            throw new MavenReportException("Could not generate the temporary directory " + sphinxSourceDirectory.getAbsolutePath() + " for the sphinx sources"); 
+            throw new MavenReportException("Could not generate the temporary directory " + sphinxSourceDirectory.getAbsolutePath() + " for the sphinx sources");
         }
 
         if (verbose) {
@@ -295,7 +295,7 @@ public class SphinxMojo extends AbstractMavenReport
         try {
             ArchiveInputStream input = new ArchiveStreamFactory().createArchiveInputStream("jar", SphinxMojo.class.getResourceAsStream("/sphinx.jar"));
             ArchiveEntry entry = input.getNextEntry();
-    
+
             while (entry != null) {
                 File archiveEntry = new File(sphinxSourceDirectory, entry.getName());
                 archiveEntry.getParentFile().mkdirs();
