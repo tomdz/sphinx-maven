@@ -64,9 +64,15 @@
       <version>2.2.1</version>
     </dependency>
     <dependency>
+      <groupId>org.apache.maven.plugin-tools</groupId>
+      <artifactId>maven-plugin-annotations</artifactId>
+      <version>3.4</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-compress</artifactId>
-      <version>1.1</version>
+      <version>1.9</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
@@ -78,9 +84,35 @@
       <artifactId>jython-standalone</artifactId>
       <version>2.5.2</version>
     </dependency>
+    <!-- for testing -->
+    <dependency>
+      <groupId>io.takari.maven.plugins</groupId>
+      <artifactId>takari-plugin-testing</artifactId>
+      <version>2.7.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.takari.maven.plugins</groupId>
+      <artifactId>takari-plugin-integration-testing</artifactId>
+      <version>2.7.0</version>
+      <type>pom</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>18.0</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <prerequisites>
-    <maven>2.2.1</maven>
+    <maven>3.0</maven>
   </prerequisites>
   <build>
     <plugins>
@@ -97,7 +129,7 @@
             <configuration>
               <rules>
                 <requireMavenVersion>
-                  <version>2.2.1</version>
+                  <version>3.0</version>
                 </requireMavenVersion>
                 <requireJavaVersion>
                   <version>1.6</version>
@@ -223,6 +255,72 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.0</version>
+        <configuration>
+          <reportPlugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-project-info-reports-plugin</artifactId>
+              <version>2.4</version>
+              <reportSets>
+                <reportSet>
+                  <reports />
+                </reportSet>
+              </reportSets>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-javadoc-plugin</artifactId>
+              <version>2.9</version>
+              <configuration>
+                <source>1.6</source>
+                <target>1.6</target>
+                <encoding>UTF-8</encoding>
+                <maxmemory>1g</maxmemory>
+                <links>
+                  <link>http://java.sun.com/javase/6/docs/api/</link>
+                </links>
+                <tags>
+                  <tag>
+                    <name>goal</name>
+                    <placement>a</placement>
+                    <head>Maven goal</head>
+                  </tag>
+                  <tag>
+                    <name>phase</name>
+                    <placement>a</placement>
+                    <head>Maven phase</head>
+                  </tag>
+                </tags>
+                <stylesheetfile>src/site/javadoc/stylesheet.css</stylesheetfile>
+              </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.tomdz.maven</groupId>
+              <artifactId>sphinx-maven-plugin</artifactId>
+              <version>${project.version}</version>
+            </plugin>
+          </reportPlugins>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>io.takari.maven.plugins</groupId>
+        <artifactId>takari-lifecycle-plugin</artifactId>
+        <version>1.11.9</version>
+        <extensions>true</extensions>
+        <executions>
+          <execution>
+            <id>testProperties</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>testProperties</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
@@ -267,7 +365,7 @@
       <plugin>
         <groupId>org.tomdz.maven</groupId>
         <artifactId>sphinx-maven-plugin</artifactId>
-        <version>1.0.4-SNAPSHOT</version>
+        <version>${project.version}</version>
         <reportSets>
           <reportSet>
             <reports><report>generate</report></reports>
@@ -278,70 +376,6 @@
   </reporting>
 
   <profiles>
-    <profile>
-      <id>maven-3</id>
-      <activation>
-        <file>
-          <!--  This employs that the basedir expression is only recognized by Maven 3.x (see MNG-2363) -->
-          <exists>${basedir}</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-site-plugin</artifactId>
-            <version>3.0</version>
-            <configuration>
-              <reportPlugins>
-                <plugin>
-                  <groupId>org.apache.maven.plugins</groupId>
-                  <artifactId>maven-project-info-reports-plugin</artifactId>
-                  <version>2.4</version>
-                  <reportSets>
-                    <reportSet>
-                      <reports />
-                    </reportSet>
-                  </reportSets>
-                </plugin>
-                <plugin>
-                  <groupId>org.apache.maven.plugins</groupId>
-                  <artifactId>maven-javadoc-plugin</artifactId>
-                  <version>2.9</version>
-                  <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                    <encoding>UTF-8</encoding>
-                    <maxmemory>1g</maxmemory>
-                    <links>
-                      <link>http://java.sun.com/javase/6/docs/api/</link>
-                    </links>
-                    <tags>
-                      <tag>
-                        <name>goal</name>
-                        <placement>a</placement>
-                        <head>Maven goal</head>
-                      </tag>
-                      <tag>
-                        <name>phase</name>
-                        <placement>a</placement>
-                        <head>Maven phase</head>
-                      </tag>
-                    </tags>
-                    <stylesheetfile>src/site/javadoc/stylesheet.css</stylesheetfile>
-                  </configuration>
-                </plugin>
-                <plugin>
-                  <groupId>org.tomdz.maven</groupId>
-                  <artifactId>sphinx-maven-plugin</artifactId>
-                  <version>${project.version}</version>
-                </plugin>
-              </reportPlugins>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
     <profile>
       <id>standalone-docs</id>
       <build>
