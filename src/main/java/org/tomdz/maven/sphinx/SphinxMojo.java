@@ -238,7 +238,10 @@ public class SphinxMojo extends AbstractMavenReport
     @Override
     protected void executeReport(Locale locale) throws MavenReportException
     {
+        outputDirectory.mkdirs();
+
         unpackSphinx();
+
         if (fork) {
             runForkedSphinx();
         }
