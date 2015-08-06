@@ -54,6 +54,10 @@ public class SphinxRunner
 
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("python");
 
+        engine.eval("import os");
+        engine.eval("os.environ['LANG'] = 'en_US.UTF-8'");
+        engine.eval("os.environ['LC_ALL'] = 'en_US.UTF-8'");
+
         engine.put("args", sphinxArgs.toArray(new String[sphinxArgs.size()]));
         engine.eval("import sphinx");
         return (Integer) engine.eval("sphinx.main(args)");
