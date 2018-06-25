@@ -1,0 +1,120 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; Sphinx-Maven 1.0.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/bootstrap.js"></script>
+    <link rel="top" title="Sphinx-Maven 1.0.2 documentation" href="#" />
+    <link rel="next" title="Creating the documentation" href="basic-usage.html" /> 
+  </head>
+  <body>
+<div class="container">
+  <div class="row">
+    <div class="span3">
+      
+  <ul class="nav nav-list">
+    <li>
+      <a class="brand" href="#">Sphinx-Maven 1.0.2</a>
+    </li>
+    <li class="divider"></li>
+    
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="basic-usage.html">Creating the documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic-usage.html#running-as-part-of-the-site-lifecycle">Running as part of the <tt class="docutils literal"><span class="pre">site</span></tt> lifecycle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic-usage.html#running-as-part-of-the-normal-lifecycle">Running as part of the normal lifecycle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html#building-pdfs">Building PDFs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html#a-note-on-memory-usage">A note on memory usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Updating Sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
+</ul>
+
+    
+    
+      
+  <li><a href="basic-usage.html"
+         title="next chapter">Creating the documentation &raquo;</a></li>
+    
+    
+      
+  <li><a href="_sources/index.txt"
+         rel="nofollow">Source</a></li>
+    
+    <li class="divider"></li>
+    
+      
+<form class="navbar-search pull-right" style="margin-bottom:-3px;" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+    
+  </ul>
+
+    </div>
+    <div class="span9">
+      
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>The <em>sphinx-maven</em> plugin is a <a class="reference external" href="http://maven.apache.org/plugins/maven-site-plugin/">Maven site plugin</a> that uses <a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a> to generate the main documentation.
+Sphinx itself was origially created by the Python community for the new Python documentation. It uses a
+plain text format called <a class="reference external" href="http://docutils.sf.net/rst.html">reStructured Text</a> which it then compiles into a variety of documentation formats
+such as HTML, LaTeX (for PDF), epub. reStructured Text is similar to <a class="reference external" href="http://daringfireball.net/projects/markdown/">Markdown</a> but - at least via Sphinx -
+has better support for multi-page documentation.</p>
+<p>The <em>sphinx-maven</em> plugin is BSD licensed just as Sphinx itself is.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="basic-usage.html">Creating the documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic-usage.html#running-as-part-of-the-site-lifecycle">Running as part of the <tt class="docutils literal"><span class="pre">site</span></tt> lifecycle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic-usage.html#running-as-part-of-the-normal-lifecycle">Running as part of the normal lifecycle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html#building-pdfs">Building PDFs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html#a-note-on-memory-usage">A note on memory usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Updating Sphinx</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="development.html#how-the-update-script-works">How the update script works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development.html#running-normal-sphinx">Running normal Sphinx</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
+</ul>
+</div>
+</div>
+
+
+    </div>
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right"><a href="#">Back to top</a></p>
+    <p>
+        &copy; Copyright 2011, Thomas Dudziak.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

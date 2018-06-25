@@ -1,0 +1,41 @@
+.. _`rst2pdf bug`: https://code.google.com/p/rst2pdf/issues/detail?id=458
+
+Updating Sphinx
+===============
+
+The project comes with a bash script which will update the embedded sphinx installation
+automatically. Simple invoke it like so::
+
+    ./src/main/build/update-sphinx.sh
+
+How the update script works
+---------------------------
+
+1. It sets up a temporary working directory ``target/sphinx-tmp`` and cd's into it.
+2. It downloads the Jython installer for version 2.5.2 from Sourceforge.
+3. It downloads the ``ez_setup.py`` script which will setup ``easy_install``.
+4. It installs Jython in the temporary directory.
+5. It installs ``easy_install`` in the temporary directory.
+6. It uses ``easy_install`` to install ``docutils``, ``pygments``, ``jinja2``, ``sphinx``, and ``rst2pdf``.
+7. ``rst2pdf`` depends on ``ReportLab``, but unfortunatly that won't install
+   directly with ``easy_install``. The reason for that is that by default it is
+   trying to install native extensions which won't work on Jython. To workaround
+   that, the script downloads the ``ReportLab`` distribution directly, unpacks it,
+   removes the native extensions (the setup script will be fine with it), and then
+   runs the installation manually.
+8. ``rst2pdf`` itself also has a bug with Pyton (see this `rst2pdf bug`_) which we'll
+   patch and then trigger Jython to pre-compile the module again.
+9. Finally, we create the ``sphinx.jar`` out of the installed modules, and move it to
+   ``src/main/resources`` (which will cause it to be included as a file in the plugin).
+
+Running normal Sphinx
+---------------------
+
+If you want to compare to the normal sphinx, install it like this::
+
+    easy_install sphinx rst2pdf
+
+and run Sphinx like so in your project's root directory::
+
+    sphinx-build -v -a -E -n -b html src/site/sphinx target/site
+    sphinx-build -a -E -n -b pdf src/site/sphinx target/site/pdf
