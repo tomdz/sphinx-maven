@@ -1,0 +1,150 @@
+diff -dur -x '*.pyc' -x '*.class' -x '*.*~' sphinx.commit/javasphinx/apidoc.py sphinx.patched/javasphinx/apidoc.py
+--- sphinx.commit/javasphinx/apidoc.py	2014-04-17 22:15:28.000000000 +0200
++++ sphinx.patched/javasphinx/apidoc.py	2014-04-18 13:08:56.801105244 +0200
+@@ -220,6 +220,7 @@
+ 
+ def main(argv=sys.argv):
+     logging.basicConfig(level=logging.WARN)
++    argv = list(argv)
+ 
+     parser = OptionParser(
+         usage="""\
+@@ -271,7 +272,7 @@
+     for input_path in input_paths:
+         if not os.path.isdir(input_path):
+             sys.stderr.write('%s is not a directory.\n' % (input_path,))
+-            sys.exit(1)
++            return 1
+ 
+     if not os.path.isdir(opts.destdir):
+         os.makedirs(opts.destdir)
+@@ -291,3 +292,6 @@
+ 
+     if not opts.notoc:
+         write_toc(packages, opts)
++        
++    return 0
++    
+diff -dur -x '*.pyc' -x '*.class' -x '*.*~' sphinx.commit/javasphinx/compiler.py sphinx.patched/javasphinx/compiler.py
+--- sphinx.commit/javasphinx/compiler.py	2014-04-17 22:15:28.000000000 +0200
++++ sphinx.patched/javasphinx/compiler.py	2014-04-18 15:56:11.141197975 +0200
+@@ -39,8 +39,8 @@
+             output.add(self.__html_to_rst(doc.description))
+             output.clear()
+ 
+-        if doc.author:
+-            output.add_line(':author: %s' % (self.__html_to_rst(doc.author),))
++        if doc.authors:
++            output.add_line(':author: %s' % (self.__html_to_rst(', '.join(doc.authors)),))
+ 
+         for name, value in doc.params:
+             output.add_line(':param %s: %s' % (name, self.__html_to_rst(value)))
+diff -dur -x '*.pyc' -x '*.class' -x '*.*~' sphinx.commit/javasphinx/extdoc.py sphinx.patched/javasphinx/extdoc.py
+--- sphinx.commit/javasphinx/extdoc.py	2014-04-17 22:15:28.000000000 +0200
++++ sphinx.patched/javasphinx/extdoc.py	2014-04-18 09:55:00.844997711 +0200
+@@ -9,13 +9,13 @@
+ 
+     # Add default Java SE sources
+     if not javadoc_url_map.get("java"):
+-        javadoc_url_map["java"] = ("http://docs.oracle.com/javase/6/docs/api", 'javadoc')
++        javadoc_url_map["java"] = ("http://docs.oracle.com/javase/7/docs/api", 'javadoc')
+     if not javadoc_url_map.get("javax"):
+-        javadoc_url_map["javax"] = ("http://docs.oracle.com/javase/6/docs/api", 'javadoc')
++        javadoc_url_map["javax"] = ("http://docs.oracle.com/javase/7/docs/api", 'javadoc')
+     if not javadoc_url_map.get("org.xml"):
+-        javadoc_url_map["org.xml"] = ("http://docs.oracle.com/javase/6/docs/api", 'javadoc')
++        javadoc_url_map["org.xml"] = ("http://docs.oracle.com/javase/7/docs/api", 'javadoc')
+     if not javadoc_url_map.get("org.w3c"):
+-        javadoc_url_map["org.w3c"] = ("http://docs.oracle.com/javase/6/docs/api", 'javadoc')
++        javadoc_url_map["org.w3c"] = ("http://docs.oracle.com/javase/7/docs/api", 'javadoc')
+ 
+     source = None
+     package = ''
+diff -dur -x '*.pyc' -x '*.class' -x '*.*~' sphinx.commit/javasphinx/htmlrst.py sphinx.patched/javasphinx/htmlrst.py
+--- sphinx.commit/javasphinx/htmlrst.py	2014-04-17 22:15:28.000000000 +0200
++++ sphinx.patched/javasphinx/htmlrst.py	2014-04-18 15:57:33.125198733 +0200
+@@ -5,7 +5,7 @@
+ import re
+ 
+ from xml.sax.saxutils import escape as html_escape
+-from bs4 import BeautifulSoup
++from BeautifulSoup import BeautifulSoup
+ 
+ Cell = collections.namedtuple('Cell', ['type', 'rowspan', 'colspan', 'contents'])
+ 
+@@ -108,7 +108,7 @@
+ 
+         rows = []
+ 
+-        for i, tr in enumerate(table.find_all('tr')):
++        for i, tr in enumerate(table.findAll('tr')):
+             row = []
+ 
+             for c in tr.contents:
+@@ -117,8 +117,14 @@
+                 if cell_type not in ('td', 'th'):
+                     continue
+ 
+-                rowspan = int(c.attrs.get('rowspan', 1))
+-                colspan = int(c.attrs.get('colspan', 1))
++                def taggetattr(tag,name,default):
++                    for i in tag.attrs:
++                        if i[0]==name:
++                            return i[1]
++                    return default
++                    
++                rowspan = int(taggetattr(c,'rowspan', 1))
++                colspan = int(taggetattr(c,'colspan', 1))
+                 contents = self._process_children(c).strip()
+ 
+                 if cell_type == 'th' and i > 0:
+@@ -216,7 +222,7 @@
+         return ''.join(parts)
+ 
+     def _process_text(self, node):
+-        return ''.join(node.strings)
++        return ''.join(node.text)
+ 
+     def _process(self, node):
+         if isinstance(node, basestring):
+@@ -250,9 +256,10 @@
+             return self._directive('parsed-literal', self._process_text(node))
+ 
+         if node.name == 'a':
+-            if 'name' in node.attrs:
++            attrs_name,attrs_value = zip(*node.attrs)
++            if 'name' in attrs_name:
+                 return self._separate('.. _' + node['name'] + ':')
+-            elif 'href' in node.attrs:
++            elif 'href' in attrs_name:
+                 target = node['href']
+                 label = self._compress_whitespace(self._process_text(node).strip('\n'))
+ 
+@@ -264,11 +271,11 @@
+                     return self._hyperlink(target, label)
+ 
+         if node.name == 'ul':
+-            items = [self._process(n) for n in node.find_all('li', recursive=False)]
++            items = [self._process(n) for n in node.findAll('li', recursive=False)]
+             return self._listing('*', items)
+ 
+         if node.name == 'ol':
+-            items = [self._process(n) for n in node.find_all('li', recursive=False)]
++            items = [self._process(n) for n in node.findAll('li', recursive=False)]
+             return self._listing('#.', items)
+ 
+         if node.name == 'li':
+@@ -389,8 +396,11 @@
+         if not s_html.strip():
+             return ''
+ 
+-        soup = BeautifulSoup(s_html, 'lxml')
+-        top = soup.html.body
++        soup = BeautifulSoup(s_html)
++        try:
++            top = soup.html.body
++        except:
++            top = soup
+ 
+         result = self._process_children(top)
+ 

@@ -1,0 +1,16 @@
+diff -dur -x '*.pyc' -x '*.class' -x '*.*~' sphinx.commit/sphinx/util/pycompat.py sphinx.patched/sphinx/util/pycompat.py
+--- sphinx.commit/sphinx/util/pycompat.py	2014-04-17 22:14:42.000000000 +0200
++++ sphinx.patched/sphinx/util/pycompat.py	2014-04-18 09:28:08.292982807 +0200
+@@ -72,7 +72,10 @@
+     import locale
+     sys_encoding = locale.getpreferredencoding()
+     # use Python 3 name
+-    from itertools import izip_longest as zip_longest
++    try:
++        from itertools import izip_longest as zip_longest
++    except:
++        pass
+     import __builtin__ as builtins
+ 
+ 
+

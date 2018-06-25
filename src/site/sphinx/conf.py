@@ -21,7 +21,7 @@ import sys, os
 
 needs_sphinx = '1.0'
 
-extensions = ['sphinx.ext.autodoc','rst2pdf.pdfbuilder']
+extensions = ['sphinx.ext.autodoc','rst2pdf.pdfbuilder','sphinxcontrib.httpdomain','javasphinx']
 
 templates_path = ['_templates']
 
@@ -48,7 +48,7 @@ master_doc = 'index'
 # -- Options for HTML output ---------------------------------------------------
 sys.path.append(os.path.abspath('_themes'))
 
-html_theme = 'bootstrap'
+html_theme = 'sphinxdoc'
 
 html_theme_path = ["_themes"]
 

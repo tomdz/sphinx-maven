@@ -1,13 +1,13 @@
-diff -dur -x '*.pyc' -x '*.class' -x hyphen.mashed /Library/Python/2.5/site-packages/reportlab-2.5-py2.5-macosx-10.7-x86_64.egg/reportlab/lib/utils.py target/sphinx-tmp/jython/Lib/site-packages/reportlab/lib/utils.py
---- /Library/Python/2.5/site-packages/reportlab-2.5-py2.5-macosx-10.7-x86_64.egg/reportlab/lib/utils.py	2012-09-26 14:31:33.000000000 -0500
-+++ target/sphinx-tmp/jython/Lib/site-packages/reportlab/lib/utils.py	2012-09-26 15:20:21.000000000 -0500
-@@ -518,7 +518,8 @@
+diff -dur -x '*.pyc' -x '*.class' -x requires.txt Lib/site-packages/reportlab/lib/utils.py target/sphinx-tmp/jython/Lib/site-packages/reportlab/lib/utils.py
+--- Lib/site-packages/reportlab/lib/utils.py	2014-04-17 21:28:27.975776000 +0200
++++ target/sphinx-tmp/jython/Lib/site-packages/reportlab/lib/utils.py	2014-04-17 21:29:29.424080771 +0200
+@@ -516,7 +516,8 @@
  
  def _isPILImage(im):
      try:
 -        return isinstance(im,Image.Image)
 +        from PIL import Image
 +        return isinstance(im, Image)
-     except ImportError:
+     except AttributeError:
          return 0
  
